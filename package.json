@@ -2,17 +2,27 @@
   "name": "numbulus",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
+  "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
+    "@types/lodash": "^4.14.179",
     "@types/node": "^16.7.13",
-    "@types/react": "^17.0.20",
-    "@types/react-dom": "^17.0.9",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react-cosmos": "^5.7.2",
+    "stylelint": "^14.5.3",
+    "stylelint-config-hudochenkov": "^6.0.1",
+    "stylelint-order": "^5.0.0",
+    "stylelint-scss": "^4.1.0"
+  },
+  "dependencies": {
+    "clsx": "^1.1.1",
+    "lodash": "^4.17.21",
+    "postcss-scss": "^4.0.3",
+    "react": "^18.0.0-rc.1",
+    "react-dom": "^18.0.0-rc.1",
     "react-scripts": "5.0.0",
+    "sass": "^1.49.9",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
@@ -20,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cosmos": "cosmos",
+    "cosmos:export": "cosmos-export"
   },
   "eslintConfig": {
     "extends": [

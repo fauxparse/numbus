@@ -1,0 +1,36 @@
+{
+  "customSyntax": "postcss-scss",
+  "extends": ["stylelint-config-hudochenkov/order"],
+  "plugins": ["stylelint-scss"],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": true,
+    "block-no-empty": true,
+    "order/order": [
+      [
+        "dollar-variables",
+        "custom-properties",
+        "at-rules",
+        "declarations",
+        {
+          "type": "at-rule",
+          "name": "for"
+        },
+        {
+          "type": "at-rule",
+          "name": "each"
+        },
+        {
+          "type": "at-rule",
+          "name": "supports"
+        },
+        {
+          "type": "at-rule",
+          "name": "media"
+        },
+        "rules"
+      ],
+      { "severity": "warning" }
+    ]
+  }
+}

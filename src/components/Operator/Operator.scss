@@ -1,0 +1,95 @@
+.operator {
+  position: relative;
+  overflow: hidden;
+  width: var(--number-size);
+  height: var(--number-size);
+  padding: 0;
+  border: var(--border-width) dashed var(--operator-border);
+  border-radius: var(--border-radius);
+  background-color: var(--app-background-translucent);
+  color: var(--operator-foreground);
+  box-shadow: none;
+  cursor: pointer;
+  transition: all 0.3s var(--easing-standard);
+  appearance: none;
+  touch-action: none;
+
+  svg {
+    position: absolute;
+    top: 12.5%;
+    right: 12.5%;
+    bottom: 12.5%;
+    left: 12.5%;
+
+    > g {
+      > rect {
+        opacity: 0;
+        fill: currentColor;
+      }
+
+      > g {
+        rect {
+          fill: currentColor;
+        }
+      }
+    }
+
+    [data-operator] {
+      transition: all 0.15s var(--easing-standard);
+      transition-property: transform opacity;
+      transform-origin: 0px 0px;
+    }
+  }
+
+  &[data-operator] {
+    border-style: solid;
+
+    &:not([data-active]) {
+      background-color: var(--operator-background);
+    }
+  }
+
+  &[data-active] {
+    z-index: 1;
+    transform: scale(1.5);
+    backdrop-filter: blur(4px);
+
+    svg {
+      > g {
+        &[data-hover] {
+          color: var(--operator-background);
+
+          > rect {
+            opacity: 0.25;
+          }
+        }
+      }
+    }
+  }
+
+  @each $op in ("add", "subtract", "multiply", "divide") {
+    @keyframes spin-#{$op} {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    &[data-operator="#{$op}"] {
+      &:not([data-active]) {
+        [data-operator] {
+          transform: scale(2);
+
+          &:not([data-operator="#{$op}"]) {
+            opacity: 0;
+          }
+        }
+
+        svg {
+          animation: spin-#{$op} 0.25s var(--easing-standard) 1 forwards;
+        }
+      }
+    }
+  }
+}

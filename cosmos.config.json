@@ -1,0 +1,9 @@
+{
+  "webpack": {
+    "configPath": "react-scripts/config/webpack.config"
+  },
+  "rootDir": "./src",
+  "staticPath": "public",
+  "port": 3001,
+  "globalImports": ["index.scss"]
+}

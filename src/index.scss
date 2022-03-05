@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap");
+
+:root {
+  --cyan-050: #ecfeff;
+  --cyan-500: #06b6d4;
+  --cyan-600: #0891b2;
+  --cyan-700: #0e7490;
+  --cyan-900: #164e63;
+  --cyan-900-85: rgba(#164e63, 0.85);
+  --teal-050: #f0fdfa;
+  --teal-500: #14b8a6;
+  --teal-700: #0f766e;
+  --pink-050: #fdf2f8;
+  --pink-500: #ec4899;
+  --pink-700: #be185d;
+  --yellow-050: #fefce8;
+  --yellow-500: #eab308;
+  --yellow-700: #a16207;
+  --purple-050: #faf5ff;
+  --purple-500: #a855f7;
+  --purple-700: #7e22ce;
+  --digit-size-1: 2.25rem;
+  --digit-size-2: 1.75rem;
+  --digit-size-3: 1.5rem;
+  --digit-size-4: 1.125rem;
+  --digit-size-5: 1rem;
+  --digit-size-6: 0.875rem;
+  --border-width: 2px;
+  --border-radius: 0.25rem;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --number-size: 4rem;
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --app-background: var(--cyan-900);
+  --app-background-translucent: var(--cyan-900-85);
+  --operator-background: var(--cyan-050);
+  --operator-border: var(--cyan-500);
+  --operator-foreground: var(--cyan-700);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background-color: var(--app-background);
+  font-size: 16px;
+  font-family: Rubik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
