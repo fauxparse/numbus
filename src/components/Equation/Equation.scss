@@ -1,0 +1,24 @@
+:root {
+  --equation-padding: 0.5rem;
+  --equation-spacing: 0.5rem;
+}
+
+.equation {
+  display: flex;
+  gap: var(--equation-spacing);
+  justify-content: center;
+  width: 100%;
+  max-width: 32rem;
+  padding: var(--equation-padding);
+  transition: all 0.3s var(--easing-standard);
+
+  &:focus-within {
+    background-color: var(--focus-light);
+  }
+
+  /* stylelint-disable-next-line order/order */
+  @media screen and (min-width: 23.5rem) {
+    max-width: calc(var(--cell-size) * 5 + var(--equation-spacing) * 4 + var(--equation-padding) * 2);
+    border-radius: calc(var(--border-radius) + var(--equation-padding));
+  }
+}

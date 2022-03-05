@@ -1,26 +1,5 @@
 .operator {
-  position: relative;
-  overflow: hidden;
-  width: var(--number-size);
-  height: var(--number-size);
-  padding: 0;
-  border: var(--border-width) dashed var(--operator-border);
-  border-radius: var(--border-radius);
-  background-color: var(--app-background-translucent);
-  color: var(--operator-foreground);
-  box-shadow: none;
-  cursor: pointer;
-  transition: all 0.3s var(--easing-standard);
-  appearance: none;
-  touch-action: none;
-
   svg {
-    position: absolute;
-    top: 12.5%;
-    right: 12.5%;
-    bottom: 12.5%;
-    left: 12.5%;
-
     > g {
       > rect {
         opacity: 0;
@@ -43,6 +22,7 @@
 
   &[data-operator] {
     border-style: solid;
+    border-color: var(--operator-border);
 
     &:not([data-active]) {
       background-color: var(--operator-background);
@@ -51,6 +31,7 @@
 
   &[data-active] {
     z-index: 1;
+    box-shadow: none;
     transform: scale(1.5);
     backdrop-filter: blur(4px);
 
@@ -61,12 +42,18 @@
 
           > rect {
             opacity: 0.25;
+            fill: var(--operator-border);
           }
+        }
+
+        > g {
+          color: var(--operator-border);
         }
       }
     }
   }
 
+  /* stylelint-disable-next-line order/order */
   @each $op in ("add", "subtract", "multiply", "divide") {
     @keyframes spin-#{$op} {
       0% {

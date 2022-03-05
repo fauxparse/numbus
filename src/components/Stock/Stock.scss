@@ -1,0 +1,6 @@
+.stock {
+  display: grid;
+  grid-template-rows: repeat(auto, var(--cell-size));
+  grid-template-columns: repeat(3, var(--cell-size));
+  gap: 0.5rem;
+}

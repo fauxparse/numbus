@@ -1,27 +1,14 @@
 .equals {
-  position: relative;
-  overflow: hidden;
-  width: var(--number-size);
-  height: var(--number-size);
-  padding: 0;
-  border: var(--border-width) dashed var(--operator-border);
-  border-radius: var(--border-radius);
-  background-color: var(--app-background-translucent);
-  color: var(--operator-foreground);
-  box-shadow: none;
-  cursor: pointer;
-  transition: all 0.3s var(--easing-standard);
-  appearance: none;
-
   svg {
-    position: absolute;
-    top: 12.5%;
-    right: 12.5%;
-    bottom: 12.5%;
-    left: 12.5%;
-
     rect {
       fill: currentColor;
     }
+  }
+
+  .number:not(:empty) + [data-operator] + .number:not(:empty) + & {
+    border-style: solid;
+    border-color: var(--operator-border);
+    background-color: var(--operator-background);
+    color: var(--operator-foreground);
   }
 }

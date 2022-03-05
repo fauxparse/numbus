@@ -10,7 +10,17 @@ const Decorator: React.FC = ({ children }) => (
       alignItems: 'center',
     }}
   >
-    {children}
+    <div
+      style={{
+        width: '400px',
+        maxWidth: '100vw',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      {children}
+    </div>
   </div>
 );
 

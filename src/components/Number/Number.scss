@@ -15,19 +15,29 @@
 
 .number {
   overflow: hidden;
-  width: var(--number-size);
-  height: var(--number-size);
-  padding: 0;
-  border: var(--border-width) solid var(--number-border);
-  border-radius: var(--border-radius);
-  background-color: var(--number-background);
-  color: var(--number-foreground);
-  box-shadow: none;
-  font-weight: var(--font-weight-bold);
   text-overflow: ellipsis;
-  cursor: pointer;
-  user-select: none;
-  appearance: none;
+
+  &:empty {
+    &::before {
+      content: "?";
+    }
+  }
+
+  .number:not(:empty) ~ .number:not(:empty) ~ &.number--nan {
+    background: no-repeat center center/4rem 4rem
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='-32 -32 64 64'%3E%3Cg stroke='%230e7490' stroke-width='8' fill='none' transform='rotate(-45)'%3E%3Ccircle r='16' /%3E%3Cline x1='-16' x2='16'/%3E%3C/g%3E%3C/svg%3E");
+    transition: none;
+
+    &::before {
+      content: "";
+    }
+  }
+
+  &:not(:empty) {
+    border: var(--border-width) solid var(--number-border);
+    background-color: var(--number-background);
+    color: var(--number-foreground);
+  }
 
   @each $color in ("given", "computed", "target") {
     &[data-color="#{$color}"] {

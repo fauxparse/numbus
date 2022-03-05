@@ -1,0 +1,29 @@
+.cell {
+  position: relative;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 0;
+  border: var(--border-width) dashed var(--operator-foreground);
+  border-radius: var(--border-radius);
+  background-color: var(--app-background-translucent);
+  color: var(--operator-foreground);
+  box-shadow: none;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s var(--easing-standard);
+  appearance: none;
+
+  svg {
+    position: absolute;
+    top: 12.5%;
+    right: 12.5%;
+    bottom: 12.5%;
+    left: 12.5%;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.375rem var(--focus);
+    outline: none;
+  }
+}
