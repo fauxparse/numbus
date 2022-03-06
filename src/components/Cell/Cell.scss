@@ -16,14 +16,23 @@
 
   svg {
     position: absolute;
-    top: 12.5%;
-    right: 12.5%;
-    bottom: 12.5%;
-    left: 12.5%;
+    top: 50%;
+    left: 50%;
+    width: calc(var(--cell-size) * 0.75);
+    height: calc(var(--cell-size) * 0.75);
+    margin: calc(var(--cell-size) * -0.375);
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.375rem var(--focus);
-    outline: none;
+    outline: 0.25rem solid var(--focus);
+    outline-offset: 1px;
+  }
+
+  &:not(:empty) {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+  }
+
+  .number:empty ~ &:not(.number) {
+    box-shadow: none;
   }
 }

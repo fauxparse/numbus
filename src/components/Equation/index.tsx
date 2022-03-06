@@ -1,44 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import Number from '../Number';
 import OperatorCell from '../OperatorCell';
 import Equals from '../Equals';
 import './Equation.scss';
-import Cell from '../Cell';
-import { apply, Operator } from '../../util/operators';
-import { Maybe } from '../../util/maybe';
+import { Operator } from '../../util/operators';
+import { isJust, Maybe } from '../../util/maybe';
+import { Slot, usePuzzleReducer, Verbs } from '../../util/state';
 
-interface EquationProps {
-  left: Maybe<number>;
-  right: Maybe<number>;
+export interface EquationProps {
+  row: number;
+  left: Maybe<Slot>;
+  right: Maybe<Slot>;
   operator: Maybe<Operator>;
+  result: Maybe<Slot>;
 }
 
-const Equation: React.FC = () => {
-  const [left, setLeft] = useState<number | null>(null);
+const Equation: React.FC<EquationProps> = ({ row, left, operator, right, result }) => {
+  const [, dispatch] = usePuzzleReducer();
 
-  const [right, setRight] = useState<number | null>(null);
-
-  const [result, setResult] = useState<number | null>(null);
-
-  const [operator, setOperator] = useState<Operator | null>(null);
-
-  useEffect(() => {
-    if (!(left ?? right)) {
-      setOperator(null);
+  const leftClicked = useCallback(() => {
+    if (isJust(left)) {
+      dispatch({ verb: Verbs.EraseNumber, row, column: 'left' });
     }
-  }, [left, right]);
+  }, [dispatch, left, row]);
 
-  useEffect(() => {
-    setResult(operator ? apply(operator, left, right) : null);
-  }, [left, operator, right]);
+  const rightClicked = useCallback(() => {
+    if (isJust(right)) {
+      dispatch({ verb: Verbs.EraseNumber, row, column: 'right' });
+    }
+  }, [dispatch, right, row]);
+
+  const operatorChanged = useCallback(
+    (operator: Maybe<Operator>) => {
+      dispatch({ verb: Verbs.ChangeOperator, row, operator });
+    },
+    [dispatch, row]
+  );
 
   return (
     <div className="equation">
-      <Number number={left} onClick={() => setLeft((current) => (current ? null : 8))} />
-      <OperatorCell operator={operator} onChange={setOperator} />
-      <Number number={right} onClick={() => setRight((current) => (current ? null : 5))} />
+      <Number {...(left ?? { number: null })} onClick={leftClicked} />
+      <OperatorCell
+        operator={isJust(left) || isJust(right) ? operator : null}
+        onChange={operatorChanged}
+      />
+      <Number {...(right ?? { number: null })} onClick={rightClicked} />
       <Equals />
-      <Number number={result} />
+      <Number {...(result ?? { number: null })} />
     </div>
   );
 };

@@ -15,31 +15,31 @@ import { Operator, OPERATORS } from '../../util/operators';
 import './Operator.scss';
 import { Maybe } from '../../util/maybe';
 
-const CLICK_TIMEOUT = 300;
+const CLICK_TIMEOUT = 200;
 
 export const ICONS: Record<Operator, ReactElement> = {
   [Operator.Add]: (
     <g>
-      <rect x={-14} y={-4} width={28} height={8} rx={2} />
-      <rect x={-4} y={-14} width={8} height={28} rx={2} />
+      <rect x={-12} y={-3} width={24} height={6} rx={2} />
+      <rect x={-3} y={-12} width={6} height={24} rx={2} />
     </g>
   ),
   [Operator.Subtract]: (
     <g>
-      <rect x={-14} y={-4} width={28} height={8} rx={2} />
+      <rect x={-12} y={-3} width={24} height={6} rx={2} />
     </g>
   ),
   [Operator.Multiply]: (
     <g transform="rotate(45)">
-      <rect x={-14} y={-4} width={28} height={8} rx={2} />
-      <rect x={-4} y={-14} width={8} height={28} rx={2} />
+      <rect x={-12} y={-3} width={24} height={6} rx={2} />
+      <rect x={-3} y={-12} width={6} height={24} rx={2} />
     </g>
   ),
   [Operator.Divide]: (
     <g>
-      <rect x={-14} y={-4} width={28} height={8} rx={2} />
-      <rect x={-4} y={-14} width={8} height={8} rx={2} />
-      <rect x={-4} y={6} width={8} height={8} rx={2} />
+      <rect x={-12} y={-3} width={24} height={6} rx={2} />
+      <rect x={-3} y={-12} width={6} height={6} rx={2} />
+      <rect x={-3} y={6} width={6} height={6} rx={2} />
     </g>
   ),
 };
@@ -67,7 +67,7 @@ function useConfirmable<T>(
   const [state, setState] = useState<T>(value);
 
   useEffect(() => {
-    setState(internal.current);
+    setState(value);
   }, [value]);
 
   const setter = useRef<(value: T) => void>(() => {});
@@ -113,13 +113,23 @@ const OperatorCell: OperatorCellComponent = forwardRef(
 
     const {
       value: hovered,
-      setValue: setHovered,
+      setValue: setOperator,
       confirm,
     } = useConfirmable<Operator | null>(operator || null, onChange);
 
     const mouseTimer = useRef<ReturnType<typeof setTimeout>>();
 
     const touchTimer = useRef<ReturnType<typeof setTimeout>>();
+
+    const clicked = useCallback(() => {
+      if (!ownRef.current?.closest('[data-active]')) {
+        console.log(operator);
+        setOperator(
+          OPERATORS[(OPERATORS.indexOf(operator as Operator) + 1) % OPERATORS.length],
+          true
+        );
+      }
+    }, [setOperator, operator]);
 
     const cursorMoved = useCallback(
       (clientX: number, clientY: number) => {
@@ -130,9 +140,9 @@ const OperatorCell: OperatorCellComponent = forwardRef(
         const u = clientX < cx ? 0 : 1;
         const v = clientY < cy ? 0 : 1;
         const op = OPERATORS[v * 2 + u];
-        setHovered(op || null);
+        setOperator(op || null);
       },
-      [setHovered]
+      [setOperator]
     );
 
     const mouseMove = useCallback(
@@ -186,6 +196,7 @@ const OperatorCell: OperatorCellComponent = forwardRef(
       (e) => {
         touchTimer.current = setTimeout(() => {
           if (!ownRef?.current) return;
+          touchTimer.current = undefined;
           ownRef.current.setAttribute('data-active', 'true');
           window.addEventListener('touchmove', touchMove, { passive: false });
         }, CLICK_TIMEOUT);
@@ -208,18 +219,6 @@ const OperatorCell: OperatorCellComponent = forwardRef(
         el.removeEventListener('contextmenu', blockContextMenu);
       };
     }, [touchStart, blockContextMenu]);
-
-    const clicked = useCallback(
-      (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        if (!(e.target as HTMLElement).closest('[data-active]')) {
-          setHovered(
-            OPERATORS[(OPERATORS.indexOf(hovered as Operator) + 1) % OPERATORS.length],
-            true
-          );
-        }
-      },
-      [setHovered, hovered]
-    );
 
     return (
       <Cell

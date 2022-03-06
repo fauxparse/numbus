@@ -1,14 +1,17 @@
 import React from 'react';
-import Stock, { StockProps } from '../Stock';
+import { usePuzzleReducer } from '../../util/state';
+import Stock from '../Stock';
 import Target, { TargetProps } from '../Target';
 import './Drawer.scss';
 
-export type DrawerProps = StockProps & TargetProps;
+export type DrawerProps = TargetProps;
 
-const Drawer: React.FC<DrawerProps> = ({ numbers, target, total }) => {
+const Drawer: React.FC<DrawerProps> = ({ target, total }) => {
+  const [state] = usePuzzleReducer();
+
   return (
     <footer className="drawer">
-      <Stock numbers={numbers} />
+      <Stock />
       <Target target={target} total={total} />
     </footer>
   );

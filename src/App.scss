@@ -1,8 +1,13 @@
+html {
+  height: -webkit-fill-available;
+}
+
 .app {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
 
   &__body {
     display: flex;

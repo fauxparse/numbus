@@ -1,0 +1,10 @@
+.puzzle {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .board {
+    flex: 1;
+    padding: calc(var(--equation-padding) - var(--equation-spacing) / 2) 0;
+  }
+}

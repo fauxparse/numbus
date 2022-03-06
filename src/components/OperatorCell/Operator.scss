@@ -1,4 +1,10 @@
 .operator {
+  z-index: 1;
+
+  &:not([data-operator]) {
+    box-shadow: none;
+  }
+
   svg {
     > g {
       > rect {
@@ -30,8 +36,7 @@
   }
 
   &[data-active] {
-    z-index: 1;
-    box-shadow: none;
+    background-color: var(--app-background-translucent);
     transform: scale(1.5);
     backdrop-filter: blur(4px);
 
@@ -57,12 +62,18 @@
   @each $op in ("add", "subtract", "multiply", "divide") {
     @keyframes spin-#{$op} {
       0% {
+        filter: blur(0);
         transform: rotate(0deg);
       }
+      50% {
+        filter: blur(2px);
+      }
       100% {
+        filter: blur(0);
         transform: rotate(360deg);
       }
     }
+
     &[data-operator="#{$op}"] {
       &:not([data-active]) {
         [data-operator] {

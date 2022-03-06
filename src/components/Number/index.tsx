@@ -4,7 +4,7 @@ import Cell from '../Cell';
 import './Number.scss';
 import { isJust, Maybe } from '../../util/maybe';
 
-export enum NumberColor {
+export enum NumberSource {
   Given = 'given',
   Computed = 'computed',
   Target = 'target',
@@ -12,13 +12,13 @@ export enum NumberColor {
 
 export interface NumberProps extends ComponentPropsWithoutRef<'button'> {
   number: Maybe<number>;
-  color?: NumberColor;
+  source?: NumberSource;
 }
 
 const Number: React.FC<NumberProps> = ({
   className,
   number,
-  color = NumberColor.Given,
+  source = NumberSource.Given,
   ...props
 }) => {
   const digits = useMemo(
@@ -31,7 +31,7 @@ const Number: React.FC<NumberProps> = ({
       as="button"
       className={clsx('number', className)}
       data-digits={digits}
-      data-color={color}
+      data-source={source}
       {...props}
     >
       {isJust(number) && number}
