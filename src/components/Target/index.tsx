@@ -12,7 +12,7 @@ const Target: React.FC<TargetProps> = ({ target, total }) => {
     <div className="target">
       <h3>Target</h3>
       <div className="target__number">{target}</div>
-      <div className="target__distance">{total && `${total} away`}</div>
+      <div className="target__distance">{total ? `${total} away` : '\u00A0'}</div>
     </div>
   );
 };

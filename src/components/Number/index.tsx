@@ -10,8 +10,6 @@ export enum NumberColor {
   Target = 'target',
 }
 
-const isValidNumber = (number: Maybe<number>): number is number => isJust(number) && !isNaN(number);
-
 export interface NumberProps extends ComponentPropsWithoutRef<'button'> {
   number: Maybe<number>;
   color?: NumberColor;
@@ -24,19 +22,19 @@ const Number: React.FC<NumberProps> = ({
   ...props
 }) => {
   const digits = useMemo(
-    () => (isValidNumber(number) ? Math.ceil(Math.log10(number + 0.1)) : 1),
+    () => (isJust(number) ? Math.ceil(Math.log10(number + 0.1)) : 1),
     [number]
   );
 
   return (
     <Cell
       as="button"
-      className={clsx('number', isJust(number) && isNaN(number) && 'number--nan', className)}
+      className={clsx('number', className)}
       data-digits={digits}
       data-color={color}
       {...props}
     >
-      {isValidNumber(number) && number}
+      {isJust(number) && number}
     </Cell>
   );
 };

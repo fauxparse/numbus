@@ -1,24 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
+import Drawer from './components/Drawer';
+import Header from './components/Header';
 import './App.scss';
+import Equation from './components/Equation';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header />
+      <div className="app__body">
+        <div className="puzzle">
+          <Equation />
+          <Equation />
+          <Equation />
+          <Equation />
+          <Equation />
+        </div>
+        <Drawer numbers={[1, 2, 3, 4, 5, 6]} target={999} total={1} />
+      </div>
     </div>
   );
 }

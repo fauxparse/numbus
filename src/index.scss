@@ -31,14 +31,17 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --cell-size: 4rem;
+  --equation-padding: 0.5rem;
+  --equation-spacing: 0.5rem;
   --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
 
   --app-background: var(--cyan-900);
   --app-background-translucent: var(--cyan-900-95);
+  --header-background: rgba(0, 0, 0, 0.25);
+  --header-foreground: var(--cyan-050);
   --operator-background: var(--cyan-050);
   --operator-border: var(--cyan-500);
   --operator-foreground: var(--cyan-700);
-
   --focus: #{rgba(#06b6d4, 0.25)};
   --focus-light: #{rgba(#06b6d4, 0.125)};
 }

@@ -7,10 +7,10 @@ export type DrawerProps = StockProps & TargetProps;
 
 const Drawer: React.FC<DrawerProps> = ({ numbers, target, total }) => {
   return (
-    <div className="drawer">
+    <footer className="drawer">
       <Stock numbers={numbers} />
       <Target target={target} total={total} />
-    </div>
+    </footer>
   );
 };
 
