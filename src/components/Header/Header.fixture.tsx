@@ -1,3 +1,3 @@
 import Header from '.';
 
-export default Header;
+export default <Header />;

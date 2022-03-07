@@ -2,8 +2,8 @@ import React from 'react';
 import { isJust, isNothing } from '../../util/maybe';
 import Number from '../Number';
 import Cell from '../Cell';
-import './Stock.scss';
 import { usePuzzleReducer, Verbs } from '../../util/state';
+import './Stock.scss';
 
 const Stock: React.FC = () => {
   const [{ rows, slots, stock }, dispatch] = usePuzzleReducer();
@@ -20,11 +20,7 @@ const Stock: React.FC = () => {
     <div className="stock">
       {stock.map((index, i) =>
         isJust(index) ? (
-          <Number
-            key={i}
-            {...(slots.get(index) || { number: null })}
-            onClick={() => placeNumber(i)}
-          />
+          <Number key={i} {...(slots[index] || { number: null })} onClick={() => placeNumber(i)} />
         ) : (
           <Cell key={i} />
         )

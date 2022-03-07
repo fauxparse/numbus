@@ -2,6 +2,8 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  max-height: calc(var(--cell-size) * 8 + var(--equation-padding) * 7);
+  padding: var(--equation-padding) 0;
 
   .board {
     flex: 1;

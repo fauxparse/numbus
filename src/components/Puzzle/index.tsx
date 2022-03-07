@@ -1,6 +1,6 @@
 import React from 'react';
 import Board from '../Board';
-import Drawer from '../Drawer';
+import Footer from '../Footer';
 import { PuzzleProvider, emptyPuzzleState } from '../../util/state';
 import Steps from './Steps';
 import './Puzzle.scss';
@@ -16,7 +16,7 @@ const Puzzle: React.FC<PuzzleProps> = ({ givens, target }) => {
       <div className="puzzle">
         <Board />
         <Steps />
-        <Drawer target={target} total={0} />
+        <Footer target={target} />
       </div>
     </PuzzleProvider>
   );

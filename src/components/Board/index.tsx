@@ -20,10 +20,10 @@ const Board: React.FC<BoardProps> = () => {
         <Equation
           key={i}
           row={i}
-          left={maybe(row.left === null ? null : slots.get(row.left))}
-          right={maybe(row.right === null ? null : slots.get(row.right))}
+          left={maybe(row.left === null ? null : slots[row.left])}
+          right={maybe(row.right === null ? null : slots[row.right])}
           operator={row.operator}
-          result={maybe(slots.get(i + givens))}
+          result={maybe(slots[i + givens])}
         />
       ))}
     </div>

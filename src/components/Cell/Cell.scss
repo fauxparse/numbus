@@ -8,6 +8,7 @@
   background-color: var(--app-background-translucent);
   color: var(--operator-foreground);
   box-shadow: none;
+  outline: 0rem solid var(--focus);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
   user-select: none;
@@ -29,7 +30,7 @@
   }
 
   &:not(:empty) {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow);
   }
 
   .number:empty ~ &:not(.number) {

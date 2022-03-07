@@ -1,13 +1,13 @@
 :root {
-  --number-background-given: var(--cyan-100);
+  --number-background-given: var(--cyan-500);
   --number-border-given: var(--cyan-700);
-  --number-foreground-given: var(--cyan-700);
-  --number-background-computed: var(--purple-100);
+  --number-foreground-given: var(--cyan-050);
+  --number-background-computed: var(--purple-500);
   --number-border-computed: var(--purple-700);
-  --number-foreground-computed: var(--purple-700);
-  --number-background-target: var(--yellow-100);
-  --number-border-target: var(--yellow-700);
-  --number-foreground-target: var(--yellow-700);
+  --number-foreground-computed: var(--purple-050);
+  --number-background-target: var(--pink-500);
+  --number-border-target: var(--pink-700);
+  --number-foreground-target: var(--pink-050);
   --number-background: var(--number-background-given);
   --number-border: var(--number-border-given);
   --number-foreground: var(--number-foreground-given);
@@ -43,6 +43,7 @@
     border: var(--border-width) solid var(--number-border);
     background-color: var(--number-background);
     color: var(--number-foreground);
+    text-shadow: 0 0.0625rem 0.125rem var(--number-border);
 
     &:active {
       transform: scale(0.95);

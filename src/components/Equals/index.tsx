@@ -9,8 +9,8 @@ const Equals: React.FC<EqualsProps> = ({ className, ...props }) => {
   return (
     <Cell as="div" className={clsx('equals', className)} {...props}>
       <svg viewBox="-18 -18 36 36">
-        <rect x={-14} y={-10} width={28} height={8} rx={2} />
-        <rect x={-14} y={2} width={28} height={8} rx={2} />
+        <rect x={-12} y={-8} width={24} height={6} rx={2} />
+        <rect x={-12} y={3} width={24} height={6} rx={2} />
       </svg>
     </Cell>
   );

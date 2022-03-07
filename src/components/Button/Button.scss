@@ -1,0 +1,21 @@
+.button {
+  margin: 0;
+  padding: 0.5em 1em;
+  border: 0;
+  border-radius: 0.25rem;
+  background: var(--button-background) linear-gradient(to bottom, transparent, var(--button-background-dark));
+  color: var(--button-foreground);
+  box-shadow: var(--shadow);
+  font: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  text-shadow: 0 -0.0625rem 0.125rem var(--button-background-dark);
+  cursor: pointer;
+  transition: all 0.15s var(--easing-standard);
+  appearance: none;
+
+  &:active {
+    background-color: var(--button-background-dark);
+    box-shadow: none;
+  }
+}

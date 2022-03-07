@@ -3,18 +3,20 @@ html {
 }
 
 .app {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  overflow: hidden;
+  height: 100vh;
+  max-height: -webkit-fill-available;
 
   &__body {
     display: flex;
     flex: 1;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
     width: 32rem;
 
     @media screen and (min-width: 23.5rem) {

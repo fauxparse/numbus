@@ -2,7 +2,7 @@ import { createReducerContext } from 'react-use';
 import set from 'lodash/fp/set';
 import last from 'lodash/fp/last';
 import range from 'lodash/range';
-import { isJust, maybe, Maybe } from './maybe';
+import { isJust, isNothing, maybe, Maybe } from './maybe';
 import { NumberSource } from '../components/Number';
 import { apply, Operator } from './operators';
 
@@ -20,7 +20,7 @@ export type Slot = {
 type PuzzleState = {
   givens: number[];
   rows: Row[];
-  slots: Map<number, Slot>;
+  slots: Slot[];
   stock: Maybe<number>[];
   previousState: Maybe<PuzzleState>;
   nextState: Maybe<PuzzleState>;
@@ -72,14 +72,11 @@ type PuzzleAction =
 const emptyRow = (): Row => ({ left: null, operator: null, right: null });
 
 export const emptyPuzzleState = (givens: number[], target: number): PuzzleState => {
-  const slots = [...givens, ...new Array(5).fill(null)].reduce(
-    (map, number, i) =>
-      map.set(i, {
-        number,
-        source: isJust(number) ? NumberSource.Given : NumberSource.Computed,
-      }),
-    new Map<number, Slot>()
-  );
+  const slots = [...givens, ...new Array(5).fill(null)].map((number) => ({
+    number,
+    source: isJust(number) ? NumberSource.Given : NumberSource.Computed,
+  }));
+
   return {
     givens,
     stock: range(givens.length),
@@ -120,8 +117,8 @@ const recalculate = (state: PuzzleState): PuzzleState => {
     const { left, operator, right } = row;
     const result = apply(
       operator,
-      maybe(isJust(left) ? slots.get(left)?.number : null),
-      maybe(isJust(right) ? slots.get(right)?.number : null)
+      maybe(isJust(left) ? slots[left]?.number : null),
+      maybe(isJust(right) ? slots[right]?.number : null)
     );
     const newStock = [...stock];
     const index = newStock.indexOf(slotIndex);
@@ -137,11 +134,11 @@ const recalculate = (state: PuzzleState): PuzzleState => {
     }
     return {
       ...set(
-        'slots',
-        new Map(accumulator.slots).set(i + givens, {
+        `slots[${i + givens}]`,
+        {
           number: result,
           source: result === target ? NumberSource.Target : NumberSource.Computed,
-        }),
+        },
         accumulator
       ),
       stock: newStock,
@@ -164,7 +161,8 @@ const reducer = (state: PuzzleState, action: PuzzleAction): PuzzleState => {
     const stock = [...state.stock];
     stock[stock.indexOf(action.slot)] = null;
     const row = set(action.column, action.slot, state.rows[action.row]);
-    if (action.column === 'right' && isJust(row.left)) row.operator = Operator.Add;
+    if (action.column === 'right' && isJust(row.left) && isNothing(row.operator))
+      row.operator = Operator.Add;
     const newState = set(`rows[${action.row}]`, row, { ...state, stock });
     if (isFullRow(last(newState.rows) as Row) && newState.rows.length < state.givens.length - 1) {
       newState.rows.push(emptyRow());

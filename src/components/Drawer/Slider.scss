@@ -1,0 +1,181 @@
+@keyframes flash-invalid {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.05);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+
+.slider {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding-bottom: 1rem;
+
+  input {
+    grid-column: 1 / span 2;
+  }
+
+  div {
+    padding: 0 0.75rem;
+  }
+
+  :nth-child(2) {
+    justify-self: flex-end;
+    transform-origin: 50% 50%;
+  }
+
+  &[data-invalid] {
+    :nth-child(2) {
+      animation: flash-invalid 1.5s var(--easing-standard) 1 forwards;
+    }
+  }
+}
+
+input[type="range"] {
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type="range"]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type="range"]::-ms-track {
+  width: 100%;
+
+  /* Hides the slider so custom styles can be added */
+  border-color: transparent;
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+}
+
+@mixin thumb-appearance {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--cyan-500);
+  box-shadow: var(--shadow);
+  cursor: grab;
+
+  :active & {
+    cursor: grabbing;
+  }
+}
+
+@mixin thumb-appearance--active {
+  cursor: grabbing;
+}
+
+@mixin thumb-appearance--focus {
+  box-shadow: 0 0 0 0.5rem var(--focus);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  @include thumb-appearance;
+  margin-top: calc(
+    (var(--border-width) - 1.5rem) / 2
+  ); /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  -webkit-appearance: none;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+  @include thumb-appearance--focus;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  @include thumb-appearance--active;
+}
+
+/* All the same stuff for Firefox */
+input[type="range"]::-moz-range-thumb {
+  @include thumb-appearance;
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+  @include thumb-appearance--focus;
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  @include thumb-appearance--active;
+}
+
+/* All the same stuff for IE */
+input[type="range"]::-ms-thumb {
+  @include thumb-appearance;
+}
+
+input[type="range"]:focus::-ms-thumb {
+  @include thumb-appearance--focus;
+}
+
+input[type="range"]:active::-ms-thumb {
+  @include thumb-appearance--active;
+}
+
+@mixin track-appearance {
+  width: 100%;
+  height: var(--border-width);
+  border: 0;
+  border-radius: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 3.91%,
+    var(--cyan-600) 3.91%,
+    var(--cyan-600) 18.43%,
+    transparent 18.43%,
+    transparent 19.43%,
+    var(--cyan-600) 19.43%,
+    var(--cyan-600) 33.97%,
+    transparent 33.97%,
+    transparent 34.97%,
+    var(--cyan-600) 34.97%,
+    var(--cyan-600) 49.5%,
+    transparent 49.5%,
+    transparent 50.5%,
+    var(--cyan-600) 50.5%,
+    var(--cyan-600) 65.03%,
+    transparent 65.03%,
+    transparent 66.03%,
+    var(--cyan-700) 66.03%,
+    var(--cyan-700) 80.56%,
+    transparent 80.56%,
+    transparent 81.56%,
+    var(--cyan-700) 81.56%,
+    var(--cyan-700) 96.09%,
+    transparent 96.09%
+  );
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  @include track-appearance;
+}
+
+input[type="range"]::-moz-range-track {
+  @include track-appearance;
+}
+
+input[type="range"]::-ms-track {
+  @include track-appearance;
+  border-width: var(--border-width) 0;
+  border-color: transparent;
+  background: transparent;
+  color: transparent;
+}
+input[type="range"]::-ms-fill-lower,
+input[type="range"]:focus::-ms-fill-lower,
+input[type="range"]::-ms-fill-upper,
+input[type="range"]:focus::-ms-fill-upper {
+  background: var(--cyan-700);
+}

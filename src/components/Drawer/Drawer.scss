@@ -1,11 +1,127 @@
 .drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
   display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
+  flex-direction: column;
   align-items: stretch;
-  padding: 0.5rem;
+  height: 100%;
+  background: var(--app-background) linear-gradient(to bottom, var(--header-background), var(--header-background));
+  transition: transform 0.5s var(--easing-standard);
+  transform: translateY(calc(var(--header-height) - 100%));
 
-  .target {
+  .header {
+    order: 1;
+    border-top: var(--border-width) dashed var(--app-background);
+    background-color: transparent;
+  }
+
+  .drawer__wrapper[aria-expanded="true"] & {
+    transform: translateY(0);
+
+    .header__buttons {
+      opacity: 0;
+      pointer-events: none;
+      touch-action: none;
+    }
+  }
+
+  &__wrapper {
+    height: var(--header-height);
+
+    + .app__body {
+      perspective: 1000px;
+      .puzzle {
+        transition: transform 0.5s var(--easing-standard) 0.1s;
+      }
+    }
+
+    &[aria-expanded="true"] {
+      + .app__body {
+        .puzzle {
+          opacity: 0.5;
+          pointer-events: none;
+          transition-delay: 0s;
+          transform: rotateX(30deg) translateY(-25%) scale(0.75);
+          touch-action: none;
+        }
+      }
+    }
+  }
+
+  &__content {
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: stretch;
+    width: var(--ui-width);
+    padding: var(--equation-padding);
+
+    > .button {
+      align-self: center;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+
+    .button {
+      font-size: 1.25rem;
+    }
+  }
+
+  .how-to-play {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    text-align: center;
+  }
+
+  p {
+    margin: 0 0 0.75rem;
+  }
+
+  b,
+  code {
+    color: var(--app-foreground-strong);
+    font: inherit;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  code {
+    display: inline-block;
+    min-width: 1rem;
+    padding: 0 0.125em;
+    border-radius: 0.125rem;
+    background-color: var(--focus);
+    line-height: 1rem;
+    text-align: center;
+  }
+
+  .nobr {
+    white-space: nowrap;
+  }
+
+  a {
+    border-bottom: 1px solid var(--cyan-700);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .reference {
+    color: var(--cyan-300);
+    font-size: 0.75rem;
   }
 }

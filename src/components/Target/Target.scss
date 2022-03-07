@@ -31,4 +31,8 @@
     font-weight: var(--font-weight-bold);
     font-size: var(--digit-size-1);
   }
+
+  &--perfect .target__distance {
+    color: var(--pink-500);
+  }
 }

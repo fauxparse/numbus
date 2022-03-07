@@ -1,18 +1,120 @@
 .header {
   display: flex;
+  gap: 0.5rem;
   align-items: center;
   align-self: stretch;
-  justify-content: space-between;
   width: 100vw;
-  padding: 1rem min(calc(50vw - (var(--cell-size) * 5 + var(--equation-spacing) * 4) / 2), 1rem);
+  padding: 0.5rem min(calc(50vw - (var(--cell-size) * 5 + var(--equation-spacing) * 4) / 2), 1rem);
   background-color: var(--header-background);
   color: var(--header-foreground);
 
   h1 {
+    flex: 1;
     margin: 0;
     font-weight: var(--font-weight-bold);
     font-size: 1.5rem;
     line-height: 1;
     text-transform: uppercase;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  button {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.25rem;
+    border: 0;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: var(--cyan-500);
+    cursor: pointer;
+    transition: all 0.15s var(--easing-standard);
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    path {
+      fill: currentColor;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    &:disabled {
+      opacity: 0.25;
+      pointer-events: none;
+      touch-action: none;
+    }
+
+    &:focus {
+      background-color: var(--focus);
+      outline: none;
+    }
+  }
+
+  .menu-button {
+    order: -1;
+    border-radius: 50%;
+
+    g {
+      transition: all 0.5s var(--easing-standard);
+      transform: rotate(540deg);
+    }
+
+    circle {
+      fill: currentColor;
+      transition: all 0.15s var(--easing-standard);
+      transform-origin: 0 0;
+
+      &:nth-child(1) {
+        fill: var(--pink-500);
+        transform: rotate(0) translateY(-6px);
+      }
+
+      &:nth-child(2) {
+        fill: var(--cyan-500);
+        transform: rotate(120deg) translateY(-6px);
+      }
+
+      &:nth-child(3) {
+        fill: var(--purple-500);
+        transform: rotate(240deg) translateY(-6px);
+      }
+    }
+
+    &:focus,
+    &:active {
+      background-color: transparent;
+    }
+
+    &:active {
+      transform: none;
+
+      circle {
+        &:nth-child(1) {
+          transform: rotate(0) translateY(-8px);
+        }
+
+        &:nth-child(2) {
+          transform: rotate(120deg) translateY(-8px);
+        }
+
+        &:nth-child(3) {
+          transform: rotate(240deg) translateY(-8px);
+        }
+      }
+    }
+
+    &[aria-pressed="true"] {
+      g {
+        transform: rotate(0deg);
+      }
+    }
   }
 }
