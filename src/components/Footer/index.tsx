@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import last from 'lodash/last';
 import { isJust, maybe, Maybe } from '../../util/maybe';
 import { usePuzzleReducer } from '../../util/state';
 import Stock from '../Stock';
 import Target, { TargetProps } from '../Target';
+import Keyboard from './Keyboard';
 import './Footer.scss';
 
 export type FooterProps = Omit<TargetProps, 'total'>;
@@ -23,10 +24,12 @@ const Footer: React.FC<FooterProps> = ({ target }) => {
   }, [givens, slots]);
 
   return (
-    <footer className="footer">
-      <Stock />
-      <Target target={target} total={closest} />
-    </footer>
+    <Keyboard>
+      <footer className="footer">
+        <Stock />
+        <Target target={target} total={closest} />
+      </footer>
+    </Keyboard>
   );
 };
 

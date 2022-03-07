@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { createPortal } from 'react-dom';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { Verbs, usePuzzleReducer } from '../../util/state';
 import { HeaderButtonContext } from '../Header';
 
@@ -8,9 +9,18 @@ const Steps: React.FC = () => {
 
   const container = useContext(HeaderButtonContext);
 
-  const undo = () => dispatch({ verb: Verbs.Undo });
+  const undo = useCallback(() => {
+    dispatch({ verb: Verbs.Undo });
+    return false;
+  }, [dispatch]);
 
-  const redo = () => dispatch({ verb: Verbs.Redo });
+  const redo = useCallback(() => {
+    dispatch({ verb: Verbs.Redo });
+    return false;
+  }, [dispatch]);
+
+  useHotkeys('ctrl+z, command+z', undo);
+  useHotkeys('shift+ctrl+z, shift+command+z', redo);
 
   if (!container) return null;
 

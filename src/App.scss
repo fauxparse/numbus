@@ -17,10 +17,6 @@ html {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    width: 32rem;
-
-    @media screen and (min-width: 23.5rem) {
-      max-width: calc(var(--cell-size) * 5 + var(--equation-spacing) * 4 + var(--equation-padding) * 2);
-    }
+    max-width: calc(var(--cell-size) * 5 + var(--equation-spacing) * 4 + var(--equation-padding) * 2);
   }
 }

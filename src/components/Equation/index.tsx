@@ -40,10 +40,7 @@ const Equation: React.FC<EquationProps> = ({ row, left, operator, right, result 
   return (
     <div className="equation">
       <Number {...(left ?? { number: null })} onClick={leftClicked} />
-      <OperatorCell
-        operator={isJust(left) || isJust(right) ? operator : null}
-        onChange={operatorChanged}
-      />
+      <OperatorCell operator={operator} onChange={operatorChanged} />
       <Number {...(right ?? { number: null })} onClick={rightClicked} />
       <Equals />
       <Number {...(result ?? { number: null })} />

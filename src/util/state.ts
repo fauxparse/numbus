@@ -54,6 +54,7 @@ type PuzzlePlaceNumber = {
   row: number;
   column: 'left' | 'right';
   slot: number;
+  operator?: Operator;
 };
 
 type PuzzleEraseNumber = {
@@ -153,21 +154,26 @@ const reducer = (state: PuzzleState, action: PuzzleAction): PuzzleState => {
   } else if (isRedoAction(action)) {
     return state.nextState ? { ...state.nextState, previousState: state } : state;
   } else if (isChangeOperatorAction(action)) {
-    return undoable(
-      state,
-      recalculate(set(`rows[${action.row}].operator`, action.operator, state))
-    );
+    const newState = set(`rows[${action.row}].operator`, action.operator, state);
+    if (action.row > 0 && isNothing(newState.rows[action.row].left)) {
+      const previousRow = action.row - 1 + newState.givens.length;
+      newState.rows[action.row].left = previousRow;
+      newState.stock[newState.stock.indexOf(previousRow)] = null;
+    }
+    return undoable(state, recalculate(newState));
   } else if (isPlaceNumberAction(action) && action.row <= state.rows.length) {
     const stock = [...state.stock];
     stock[stock.indexOf(action.slot)] = null;
     const row = set(action.column, action.slot, state.rows[action.row]);
     if (action.column === 'right' && isJust(row.left) && isNothing(row.operator))
       row.operator = Operator.Add;
-    const newState = set(`rows[${action.row}]`, row, { ...state, stock });
+    const newState = recalculate(set(`rows[${action.row}]`, row, { ...state, stock }));
     if (isFullRow(last(newState.rows) as Row) && newState.rows.length < state.givens.length - 1) {
-      newState.rows.push(emptyRow());
+      if (newState.slots[action.row + newState.givens.length]?.number !== newState.target) {
+        newState.rows.push(emptyRow());
+      }
     }
-    return undoable(state, recalculate(newState));
+    return undoable(state, newState);
   } else if (isEraseNumberAction(action)) {
     const stock = [...state.stock];
     stock[stock.indexOf(null)] = state.rows[action.row][action.column];

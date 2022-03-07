@@ -123,7 +123,6 @@ const OperatorCell: OperatorCellComponent = forwardRef(
 
     const clicked = useCallback(() => {
       if (!ownRef.current?.closest('[data-active]')) {
-        console.log(operator);
         setOperator(
           OPERATORS[(OPERATORS.indexOf(operator as Operator) + 1) % OPERATORS.length],
           true
