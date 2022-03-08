@@ -13,7 +13,7 @@
   "stylelint.snippet": ["css", "less", "postcss", "scss"],
   "stylelint.validate": ["css", "less", "postcss", "scss"],
   "stylelint.packageManager": "yarn",
-  "jest.jestCommandLine": "yarn jest",
+  "jest.jestCommandLine": "yarn test",
   "jest.showCoverageOnLoad": true,
   "stylelint.stylelintPath": "./node_modules/stylelint"
 }
