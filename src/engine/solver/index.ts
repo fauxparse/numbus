@@ -14,9 +14,6 @@ const OPERATORS = toPairs(OPERATIONS) as [
   (left: Maybe<number>, right: Maybe<number>) => Maybe<number>
 ][];
 
-const numbersOf = (state: State): number[] =>
-  sortBy([(n) => -n], state.cards.map((c) => c?.number).filter(Boolean) as number[]);
-
 function* pairs(numbers: number[]): Generator<SolutionNode> {
   for (let i = 0; i < numbers.length - 1; i++) {
     for (let j = i + 1; j < numbers.length; j++) {

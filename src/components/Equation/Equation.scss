@@ -1,14 +1,6 @@
 .equation {
   display: flex;
   gap: var(--equation-spacing);
+  align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 32rem;
-  padding: calc(var(--equation-spacing) / 2) var(--equation-padding);
-  transition: all 0.3s var(--easing-standard);
-
-  @media screen and (min-width: 23.5rem) {
-    max-width: var(--ui-width);
-    border-radius: calc(var(--border-radius) + var(--equation-padding));
-  }
 }

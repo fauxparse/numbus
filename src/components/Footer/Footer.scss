@@ -1,11 +1,11 @@
 .footer {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  align-items: stretch;
-  padding: 0.5rem;
+  display: grid;
+  grid-template-rows: repeat(2, var(--cell-size));
+  grid-template-columns: repeat(3, var(--cell-size)) 1fr;
+  gap: var(--equation-padding);
 
   .target {
-    flex: 1;
+    grid-row: 1 / -1;
+    grid-column: 4;
   }
 }

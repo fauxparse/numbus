@@ -1,8 +1,21 @@
 .operator {
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--border-radius);
+  background-color: transparent;
+  color: var(--empty-foreground);
+  cursor: pointer;
+  transition: all 0.15s var(--easing-standard);
 
-  &:not([data-operator]) {
-    box-shadow: none;
+  &:focus {
+    outline: 0.25rem solid var(--focus);
+    outline-offset: 1px;
   }
 
   svg {
@@ -26,10 +39,13 @@
     }
   }
 
-  &[data-operator] {
+  &[data-operator],
+  &[data-active] {
     border-style: solid;
     border-color: var(--operator-border);
+  }
 
+  &[data-operator] {
     &:not([data-active]) {
       background-color: var(--operator-background);
     }
@@ -37,30 +53,25 @@
 
   &[data-active] {
     z-index: 2;
-    background-color: var(--app-background-translucent);
+    border-color: var(--operator-border);
+    background-color: var(--operator-background);
+    color: var(--operator-foreground);
     transform: scale(1.5);
-    backdrop-filter: blur(4px);
 
     svg {
       > g {
         &[data-hover] {
-          color: var(--operator-background);
-
           > rect {
             opacity: 0.25;
-            fill: var(--operator-border);
+            fill: var(--empty-foreground);
           }
-        }
-
-        > g {
-          color: var(--operator-border);
         }
       }
     }
   }
 
   /* stylelint-disable-next-line order/order */
-  @each $op in ("add", "subtract", "multiply", "divide") {
+  @each $op in ("plus", "minus", "times", "divided") {
     @keyframes spin-#{$op} {
       0% {
         filter: blur(0);

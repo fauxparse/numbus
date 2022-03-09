@@ -30,36 +30,59 @@
   --digit-size-2: 2rem;
   --digit-size-3: 1.5rem;
   --digit-size-4: 1.25rem;
-  --digit-size-5: 1.125rem;
-  --digit-size-6: 1rem;
+  --digit-size-5: 1rem;
+  --digit-size-6: 0.75rem;
+  --digit-size-7: 0.625rem;
+  --digit-size-8: 0.5rem;
   --border-width: 0.125rem;
   --border-radius: 0.25rem;
   --font-weight-normal: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --header-height: 3.5rem;
   --cell-size: 4rem;
   --equation-padding: 0.5rem;
   --equation-spacing: 0.5rem;
   --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
 
-  --app-background: var(--cyan-900);
-  --app-background-translucent: var(--cyan-900-50);
-  --app-foreground: var(--cyan-100);
-  --app-foreground-strong: var(--cyan-050);
+  --background: var(--cyan-900);
+  --background-translucent: var(--cyan-900-50);
+  --foreground: var(--cyan-100);
+  --empty-border: var(--cyan-700);
+  --empty-foreground: var(--cyan-600);
+  --number-background-given: var(--cyan-500);
+  --number-border-given: var(--cyan-700);
+  --number-foreground-given: var(--cyan-050);
+  --number-background-calculated: var(--purple-500);
+  --number-border-calculated: var(--purple-700);
+  --number-foreground-calculated: var(--purple-050);
+  --number-background-target: var(--pink-500);
+  --number-border-target: var(--pink-700);
+  --number-foreground-target: var(--pink-050);
+  --operator-background: var(--cyan-100);
+  --operator-border: var(--cyan-700);
+  --operator-foreground: var(--cyan-700);
+  --focus: #{rgba(#06b6d4, 0.25)};
   --header-background: rgba(0, 0, 0, 0.25);
   --header-foreground: var(--cyan-050);
-  --operator-background: var(--cyan-100);
-  --operator-border: var(--cyan-500);
-  --operator-foreground: var(--cyan-600);
-  --focus: #{rgba(#06b6d4, 0.25)};
-  --focus-light: #{rgba(#06b6d4, 0.125)};
-  --header-height: 3.5rem;
-  --ui-width: calc(var(--cell-size) * 5 + var(--equation-spacing) * 4 + var(--equation-padding) * 2);
-  --error: var(--pink-500);
-  --button-background: var(--pink-500);
-  --button-background-dark: var(--pink-700);
-  --button-foreground: var(--pink-050);
-  --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+  --ui-width: calc(var(--cell-size) * 5 + var(--equation-spacing) * 4);
+
+  // --app-background: var(--cyan-900);
+  // --app-background-translucent: var(--cyan-900-50);
+  // --app-foreground: var(--cyan-100);
+  // --app-foreground-strong: var(--cyan-050);
+  // --operator-background: var(--cyan-100);
+  // --operator-border: var(--cyan-500);
+  // --operator-foreground: var(--cyan-600);
+  // --focus: #{rgba(#06b6d4, 0.25)};
+  // --focus-light: #{rgba(#06b6d4, 0.125)};
+  // --header-height: 3.5rem;
+  // --ui-width: calc(var(--cell-size) * 5 + var(--equation-spacing) * 4 + var(--equation-padding) * 2);
+  // --error: var(--pink-500);
+  // --button-background: var(--pink-500);
+  // --button-background-dark: var(--pink-700);
+  // --button-foreground: var(--pink-050);
+  // --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
 }
 
 *,
@@ -76,8 +99,8 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--app-background);
-  color: var(--app-foreground);
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: Rubik, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   user-select: none;

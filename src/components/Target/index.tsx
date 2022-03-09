@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import React from 'react';
-import { Maybe } from '../../util/maybe';
 import './Target.scss';
 
 export interface TargetProps {

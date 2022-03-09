@@ -1,14 +1,9 @@
-import React from 'react';
-import { useValue, useSelect } from 'react-cosmos/fixture';
-import Number, { NumberProps, NumberSource } from '.';
+import Number from '.';
 
-const NumberFixture: React.FC<NumberProps> = () => {
-  const [number] = useValue('number', { defaultValue: 1 });
-  const [color] = useSelect<keyof typeof NumberSource>('color', {
-    defaultValue: 'Given',
-    options: Object.keys(NumberSource) as (keyof typeof NumberSource)[],
-  });
-  return <Number number={number} color={NumberSource[color]} />;
+const Fixtures = {
+  given: <Number number={10} source="given" />,
+  calculated: <Number number={100} source="calculated" />,
+  target: <Number number={69} source="target" />,
 };
 
-export default NumberFixture;
+export default Fixtures;

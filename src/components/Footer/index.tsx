@@ -1,35 +1,28 @@
-import React, { useMemo, useState } from 'react';
-import last from 'lodash/last';
-import { isJust, maybe, Maybe } from '../../util/maybe';
-import { usePuzzleReducer } from '../../util/state';
-import Stock from '../Stock';
-import Target, { TargetProps } from '../Target';
-import Keyboard from './Keyboard';
+import React, { useCallback } from 'react';
+import Cell from '../Cell';
+import Number from '../Number';
 import './Footer.scss';
 
-export type FooterProps = Omit<TargetProps, 'total'>;
+interface FooterProps {
+  cards: Immutable<Maybe<Card>[]>;
+  onCardClicked?: (card: Card) => void;
+}
 
-const Footer: React.FC<FooterProps> = ({ target }) => {
-  const [{ slots, givens }] = usePuzzleReducer();
-
-  const closest = useMemo<Maybe<number>>(() => {
-    return maybe(
-      last(
-        slots
-          .slice(givens.length)
-          .map((slot) => maybe(slot?.number))
-          .filter(isJust)
-      )
-    );
-  }, [givens, slots]);
+const Footer: React.FC<FooterProps> = ({ cards, children, onCardClicked }) => {
+  const cardClicked = useCallback(
+    (card: Card) => {
+      if (onCardClicked) onCardClicked(card);
+    },
+    [onCardClicked]
+  );
 
   return (
-    <Keyboard>
-      <footer className="footer">
-        <Stock />
-        <Target target={target} total={closest} />
-      </footer>
-    </Keyboard>
+    <div className="footer">
+      {children}
+      {cards.map((card, i) => (
+        <Cell key={i}>{card && <Number {...card} onClick={() => cardClicked(card)} />}</Cell>
+      ))}
+    </div>
   );
 };
 

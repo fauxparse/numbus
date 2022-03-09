@@ -1,6 +1,5 @@
 import React, { createContext, useCallback, useState } from 'react';
 import Slider from './Slider';
-import Button from '../Button';
 import './Drawer.scss';
 
 type DrawerContextShape = {
@@ -57,9 +56,7 @@ const Drawer: React.FC = ({ children }) => {
                 </p>
               </div>
               <Slider />
-              <div className="drawer__buttons">
-                <Button>New game</Button>
-              </div>
+              <div className="drawer__buttons"></div>
             </div>
           </aside>
         </div>

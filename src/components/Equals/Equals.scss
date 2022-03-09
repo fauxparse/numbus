@@ -1,13 +1,7 @@
 .equals {
-  cursor: auto;
+  color: var(--empty-foreground);
 
-  svg {
-    rect {
-      fill: currentColor;
-    }
-  }
-
-  .number:not(:empty) + [data-operator] + .number:not(:empty) + & {
+  .cell:not(:empty) + .cell:not([data-empty]) + .cell:not(:empty) + &::before {
     border-style: solid;
     border-color: var(--operator-border);
     background-color: var(--operator-background);

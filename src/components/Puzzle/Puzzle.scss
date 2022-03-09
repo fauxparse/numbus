@@ -6,7 +6,10 @@
   padding: var(--equation-padding) 0;
 
   .board {
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    gap: var(--equation-spacing);
     padding: calc(var(--equation-padding) - var(--equation-spacing) / 2) 0;
   }
 }

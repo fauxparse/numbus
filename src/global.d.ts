@@ -1,4 +1,4 @@
-type Source = 'given' | 'calculated';
+type Source = 'given' | 'calculated' | 'target';
 
 type Operator = 'plus' | 'minus' | 'times' | 'divided';
 

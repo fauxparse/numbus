@@ -1,8 +1,5 @@
 import React from 'react';
-import Equals, { EqualsProps } from '.';
+import Equals from '.';
+import Cell from '../Cell';
 
-const EqualsFixture: React.FC<EqualsProps> = () => {
-  return <Equals />;
-};
-
-export default EqualsFixture;
+export default <Equals />;

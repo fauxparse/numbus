@@ -1,42 +1,31 @@
-import React, { ComponentPropsWithoutRef, useMemo } from 'react';
+import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
 import clsx from 'clsx';
-import Cell from '../Cell';
 import './Number.scss';
-import { isJust, Maybe } from '../../util/maybe';
 
-export enum NumberSource {
-  Given = 'given',
-  Computed = 'computed',
-  Target = 'target',
+interface NumberProps extends Omit<ComponentPropsWithoutRef<'button'>, 'id'> {
+  id?: number;
+  number: number;
+  source: Source;
 }
 
-export interface NumberProps extends ComponentPropsWithoutRef<'button'> {
-  number: Maybe<number>;
-  source?: NumberSource;
-}
+const Number = forwardRef<HTMLButtonElement, NumberProps>(
+  ({ className, number, source, id, ...props }, ref) => {
+    const digits = Math.floor(Math.log10(number)) + 1 || 1;
 
-const Number: React.FC<NumberProps> = ({
-  className,
-  number,
-  source = NumberSource.Given,
-  ...props
-}) => {
-  const digits = useMemo(
-    () => (isJust(number) ? Math.ceil(Math.log10(number + 0.1)) : 1),
-    [number]
-  );
+    return (
+      <button
+        ref={ref}
+        className={clsx('number', className)}
+        data-source={source}
+        {...props}
+        data-digits={digits}
+      >
+        {number}
+      </button>
+    );
+  }
+);
 
-  return (
-    <Cell
-      as="button"
-      className={clsx('number', className)}
-      data-digits={digits}
-      data-source={source}
-      {...props}
-    >
-      {isJust(number) && number}
-    </Cell>
-  );
-};
+Number.displayName = 'Number';
 
 export default Number;

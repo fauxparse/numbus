@@ -17,8 +17,15 @@ const replace = (oldCard: Maybe<Card>, newCard: Maybe<Card>, state: State): Stat
       }
     : state;
 
-const makeAvailable = (card: Maybe<Card>, state: State): State =>
-  card ? { ...state, cards: insertAtFirstBlank(state.cards, card) } : state;
+const cards = (state: State): Card[] =>
+  [...state.rows.flatMap(({ left, right }) => [left, right]), ...state.cards].filter(
+    Boolean
+  ) as Card[];
+
+const makeAvailable = (card: Maybe<Card>, state: State): State => {
+  if (!card || cards(state).some((c) => c.id === card.id)) return state;
+  return { ...state, cards: insertAtFirstBlank(state.cards, card) };
+};
 
 const calculate = (initial: State): State =>
   initial.rows.reduce((state, row, index) => {
@@ -36,6 +43,10 @@ const calculate = (initial: State): State =>
           source: 'calculated',
         }
       : null;
+
+    if (row.result?.number === newResult?.number) {
+      return state;
+    }
 
     return row.result
       ? makeAvailable(newResult, replace(row.result, newResult, state))

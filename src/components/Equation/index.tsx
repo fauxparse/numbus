@@ -1,49 +1,24 @@
-import React, { useCallback } from 'react';
-import Number from '../Number';
-import OperatorCell from '../OperatorCell';
+import React from 'react';
+import Cell from '../Cell';
 import Equals from '../Equals';
+import Number from '../Number';
+import OperatorButton from '../OperatorButton';
 import './Equation.scss';
-import { Operator } from '../../util/operators';
-import { isJust, Maybe } from '../../util/maybe';
-import { Slot, usePuzzleReducer, Verbs } from '../../util/state';
 
-export interface EquationProps {
-  row: number;
-  left: Maybe<Slot>;
-  right: Maybe<Slot>;
-  operator: Maybe<Operator>;
-  result: Maybe<Slot>;
+interface EquationProps extends Row {
+  onOperatorChange: (operator: Maybe<Operator>) => void;
 }
 
-const Equation: React.FC<EquationProps> = ({ row, left, operator, right, result }) => {
-  const [, dispatch] = usePuzzleReducer();
-
-  const leftClicked = useCallback(() => {
-    if (isJust(left)) {
-      dispatch({ verb: Verbs.EraseNumber, row, column: 'left' });
-    }
-  }, [dispatch, left, row]);
-
-  const rightClicked = useCallback(() => {
-    if (isJust(right)) {
-      dispatch({ verb: Verbs.EraseNumber, row, column: 'right' });
-    }
-  }, [dispatch, right, row]);
-
-  const operatorChanged = useCallback(
-    (operator: Maybe<Operator>) => {
-      dispatch({ verb: Verbs.ChangeOperator, row, operator });
-    },
-    [dispatch, row]
-  );
-
+const Equation: React.FC<EquationProps> = ({ left, operator, right, result, onOperatorChange }) => {
   return (
     <div className="equation">
-      <Number {...(left ?? { number: null })} onClick={leftClicked} />
-      <OperatorCell operator={operator} onChange={operatorChanged} />
-      <Number {...(right ?? { number: null })} onClick={rightClicked} />
+      <Cell>{left && <Number {...left} />}</Cell>
+      <Cell>
+        <OperatorButton operator={operator} onChange={onOperatorChange} />
+      </Cell>
+      <Cell>{right && <Number {...right} />}</Cell>
       <Equals />
-      <Number {...(result ?? { number: null })} />
+      <Cell>{result && <Number {...result} />}</Cell>
     </div>
   );
 };

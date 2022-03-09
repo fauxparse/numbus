@@ -1,5 +1,5 @@
-import React, {
-  ElementType,
+import {
+  ComponentPropsWithoutRef,
   forwardRef,
   ReactElement,
   useCallback,
@@ -9,33 +9,29 @@ import React, {
 } from 'react';
 import clsx from 'clsx';
 import mergeRefs from 'react-merge-refs';
-import { PolymorphicComponentProps, PolymorphicRef, WithDisplayName } from '../../util/polymorphic';
-import Cell from '../Cell';
-import { Operator, OPERATORS } from '../../util/operators';
 import './Operator.scss';
-import { Maybe } from '../../util/maybe';
 
 const CLICK_TIMEOUT = 200;
 
 export const ICONS: Record<Operator, ReactElement> = {
-  [Operator.Add]: (
+  plus: (
     <g>
       <rect x={-12} y={-3} width={24} height={6} rx={2} />
       <rect x={-3} y={-12} width={6} height={24} rx={2} />
     </g>
   ),
-  [Operator.Subtract]: (
+  minus: (
     <g>
       <rect x={-12} y={-3} width={24} height={6} rx={2} />
     </g>
   ),
-  [Operator.Multiply]: (
+  times: (
     <g transform="rotate(45)">
       <rect x={-12} y={-3} width={24} height={6} rx={2} />
       <rect x={-3} y={-12} width={6} height={24} rx={2} />
     </g>
   ),
-  [Operator.Divide]: (
+  divided: (
     <g>
       <rect x={-12} y={-3} width={24} height={6} rx={2} />
       <rect x={-3} y={-12} width={6} height={6} rx={2} />
@@ -43,20 +39,12 @@ export const ICONS: Record<Operator, ReactElement> = {
     </g>
   ),
 };
+const OPERATORS = Object.keys(ICONS) as Operator[];
 
-interface BaseOperatorCellProps {
+interface OperatorButtonProps extends Omit<ComponentPropsWithoutRef<'button'>, 'onChange'> {
   operator: Maybe<Operator>;
   onChange?: (operator: Maybe<Operator>) => void;
 }
-
-export type OperatorCellProps<C extends ElementType> = PolymorphicComponentProps<
-  C,
-  BaseOperatorCellProps
->;
-
-export type OperatorCellComponent = WithDisplayName<
-  <C extends ElementType = 'button'>(props: OperatorCellProps<C>) => Maybe<ReactElement>
->;
 
 function useConfirmable<T>(
   value: T,
@@ -104,11 +92,8 @@ function useConfirmable<T>(
   return { value: state, setValue, confirm };
 }
 
-const OperatorCell: OperatorCellComponent = forwardRef(
-  <T extends ElementType = 'button'>(
-    { className, operator, onChange, ...props }: OperatorCellProps<T>,
-    ref: PolymorphicRef<T>
-  ) => {
+const OperatorButton = forwardRef<HTMLButtonElement, OperatorButtonProps>(
+  ({ className, operator, onChange, ...props }, ref) => {
     const ownRef = useRef<HTMLButtonElement>();
 
     const {
@@ -220,8 +205,7 @@ const OperatorCell: OperatorCellComponent = forwardRef(
     }, [touchStart, blockContextMenu]);
 
     return (
-      <Cell
-        as="button"
+      <button
         ref={mergeRefs([ref, ownRef])}
         className={clsx('operator', className)}
         data-operator={operator}
@@ -242,11 +226,11 @@ const OperatorCell: OperatorCellComponent = forwardRef(
             </g>
           ))}
         </svg>
-      </Cell>
+      </button>
     );
   }
 );
 
-OperatorCell.displayName = 'Operator';
+OperatorButton.displayName = 'Operator';
 
-export default OperatorCell;
+export default OperatorButton;
