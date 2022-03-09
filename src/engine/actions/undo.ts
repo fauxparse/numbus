@@ -8,7 +8,7 @@ export const undoable =
 
 const addUndoState = ({ next, ...state }: State, previous: State): State => ({
   ...state,
-  id: state.id + 1,
+  step: state.step + 1,
   previous,
 });
 

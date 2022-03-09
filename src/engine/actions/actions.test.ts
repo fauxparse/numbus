@@ -1,12 +1,14 @@
 import { perform } from '.';
+import { blankRow } from './helpers';
 
 describe('actions', () => {
   let state: State;
 
   beforeEach(() => {
     state = {
-      id: 0,
-      rows: [{ left: null, right: null, operator: null, result: null }],
+      seed: 'Ggwcd7uE4C1t3FkiR',
+      step: 0,
+      rows: [blankRow()],
       cards: [
         { id: 1, number: 100, source: 'given' },
         { id: 2, number: 50, source: 'given' },
@@ -15,6 +17,7 @@ describe('actions', () => {
         { id: 5, number: 5, source: 'given' },
         { id: 6, number: 9, source: 'given' },
       ] as Card[],
+      target: 334,
     };
   });
 

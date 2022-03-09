@@ -4,10 +4,8 @@ type Operator = 'plus' | 'minus' | 'times' | 'divided';
 
 type Side = 'left' | 'right';
 
-type ID = number;
-
 type Card = {
-  id: ID;
+  id: number;
   number: number;
   source: Source;
 };
@@ -30,9 +28,11 @@ type Row = Immutable<{
 }>;
 
 type State = Immutable<{
-  id: ID;
+  seed: string;
+  step: number;
   rows: Row[];
   cards: Maybe<Card>[];
+  target: number;
   previous?: State;
   next?: State;
 }>;
@@ -64,3 +64,12 @@ type Redo = Immutable<{
 }>;
 
 type Action = Use | Unuse | Operate | Undo | Redo;
+
+type Step = {
+  left: number;
+  right: number;
+  operator: Operator;
+  result: number;
+};
+
+type Solution = { steps: Step[] };
