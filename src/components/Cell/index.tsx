@@ -1,15 +1,32 @@
 import clsx from 'clsx';
-import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
+import { ComponentPropsWithoutRef, forwardRef, useRef } from 'react';
+import mergeRefs from 'react-merge-refs';
 import './Cell.scss';
 
-type CellProps = ComponentPropsWithoutRef<'div'>;
+export type DropEvent = CustomEvent<{
+  card: Card;
+  destination: { row: number; side: Side } | 'stock';
+}>;
 
-const Cell = forwardRef<HTMLDivElement, CellProps>(({ className, children, ...props }, ref) => {
-  return (
-    <div ref={ref} className={clsx('cell', className)} {...props}>
-      {children}
-    </div>
-  );
-});
+type CellProps = ComponentPropsWithoutRef<'div'> & {
+  droppable?: true;
+};
+
+const Cell = forwardRef<HTMLDivElement, CellProps>(
+  ({ className, children, droppable, ...props }, ref) => {
+    const ownRef = useRef<HTMLDivElement>();
+
+    return (
+      <div
+        ref={mergeRefs([ref, ownRef])}
+        className={clsx('cell', className)}
+        data-droppable={droppable || undefined}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 export default Cell;

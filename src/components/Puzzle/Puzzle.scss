@@ -10,6 +10,6 @@
     flex: 1;
     flex-direction: column;
     gap: var(--equation-spacing);
-    padding: calc(var(--equation-padding) - var(--equation-spacing) / 2) 0;
+    padding: calc(var(--equation-padding) - var(--equation-spacing) / 2) 0 var(--equation-padding);
   }
 }

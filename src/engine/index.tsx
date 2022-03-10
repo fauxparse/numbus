@@ -7,6 +7,7 @@ type EngineContextShape =
   | {
       state: State;
       use: (action: Omit<Use, 'action'>) => void;
+      unuse: (action: Omit<Unuse, 'action'>) => void;
       operate: (action: Omit<Operate, 'action'>) => void;
       undo: () => void;
       redo: () => void;
@@ -22,6 +23,8 @@ export const EngineProvider: React.FC = ({ children }) => {
 
   const use = (action: Omit<Use, 'action'>) => dispatch({ action: 'use', ...action });
 
+  const unuse = (action: Omit<Unuse, 'action'>) => dispatch({ action: 'unuse', ...action });
+
   const operate = (action: Omit<Operate, 'action'>) => dispatch({ action: 'operate', ...action });
 
   const undo = () => dispatch({ action: 'undo' });
@@ -29,7 +32,9 @@ export const EngineProvider: React.FC = ({ children }) => {
   const redo = () => dispatch({ action: 'redo' });
 
   return (
-    <EngineContext.Provider value={state ? { state, use, operate, undo, redo } : { state: null }}>
+    <EngineContext.Provider
+      value={state ? { state, use, unuse, operate, undo, redo } : { state: null }}
+    >
       {children}
     </EngineContext.Provider>
   );

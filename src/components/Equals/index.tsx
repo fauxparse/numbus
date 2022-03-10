@@ -3,7 +3,7 @@ import React, { ComponentPropsWithoutRef } from 'react';
 import Cell from '../Cell';
 import './Equals.scss';
 
-type EqualsProps = ComponentPropsWithoutRef<'div'>;
+type EqualsProps = Omit<ComponentPropsWithoutRef<'div'>, 'onDrop'>;
 
 const Equals: React.FC<EqualsProps> = ({ className, ...props }) => (
   <Cell className={clsx('equals', className)} {...props}>

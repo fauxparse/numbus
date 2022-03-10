@@ -30,4 +30,8 @@
       --number-foreground: var(--number-foreground-#{$source});
     }
   }
+
+  &[data-dragging="true"] {
+    box-shadow: var(--shadow-8);
+  }
 }

@@ -33,6 +33,7 @@
 
     + .app__body {
       perspective: 1000px;
+
       .puzzle {
         transition: transform 0.5s var(--easing-standard) 0.1s;
       }

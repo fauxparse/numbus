@@ -2,7 +2,7 @@ import React, { ComponentPropsWithoutRef, forwardRef } from 'react';
 import clsx from 'clsx';
 import './Number.scss';
 
-interface NumberProps extends Omit<ComponentPropsWithoutRef<'button'>, 'id'> {
+export interface NumberProps extends Omit<ComponentPropsWithoutRef<'button'>, 'id'> {
   id?: number;
   number: number;
   source: Source;
@@ -16,9 +16,10 @@ const Number = forwardRef<HTMLButtonElement, NumberProps>(
       <button
         ref={ref}
         className={clsx('number', className)}
+        data-id={id}
         data-source={source}
-        {...props}
         data-digits={digits}
+        {...props}
       >
         {number}
       </button>

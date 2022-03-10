@@ -1,36 +1,35 @@
-import React, { useCallback } from 'react';
-import { Flipped } from 'react-flip-toolkit';
+import { ComponentPropsWithoutRef, forwardRef, useCallback } from 'react';
 import Cell from '../Cell';
-import Number from '../Number';
+import DraggableNumber from '../Number/DraggableNumber';
 import './Footer.scss';
 
-interface FooterProps {
+interface FooterProps extends ComponentPropsWithoutRef<'footer'> {
   cards: Immutable<Maybe<Card>[]>;
   onCardClicked?: (card: Card) => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ cards, children, onCardClicked }) => {
-  const cardClicked = useCallback(
-    (card: Card) => {
-      if (onCardClicked) onCardClicked(card);
-    },
-    [onCardClicked]
-  );
+const Footer = forwardRef<HTMLDivElement, FooterProps>(
+  ({ cards, children, onCardClicked }, ref) => {
+    const cardClicked = useCallback(
+      (card: Card) => {
+        if (onCardClicked) onCardClicked(card);
+      },
+      [onCardClicked]
+    );
 
-  return (
-    <div className="footer">
-      {children}
-      {cards.map((card, i) => (
-        <Cell key={i}>
-          {card && (
-            <Flipped flipId={card.id}>
-              <Number {...card} onClick={() => cardClicked(card)} />
-            </Flipped>
-          )}
-        </Cell>
-      ))}
-    </div>
-  );
-};
+    return (
+      <div className="footer" ref={ref}>
+        {children}
+        {cards.map((card, i) => (
+          <Cell key={i} droppable={!card || undefined}>
+            {card && <DraggableNumber {...card} onClick={() => cardClicked(card)} />}
+          </Cell>
+        ))}
+      </div>
+    );
+  }
+);
+
+Footer.displayName = 'Footer';
 
 export default Footer;
