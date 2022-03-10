@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { Flipped } from 'react-flip-toolkit';
 import Cell from '../Cell';
 import Number from '../Number';
 import './Footer.scss';
@@ -20,7 +21,13 @@ const Footer: React.FC<FooterProps> = ({ cards, children, onCardClicked }) => {
     <div className="footer">
       {children}
       {cards.map((card, i) => (
-        <Cell key={i}>{card && <Number {...card} onClick={() => cardClicked(card)} />}</Cell>
+        <Cell key={i}>
+          {card && (
+            <Flipped flipId={card.id}>
+              <Number {...card} onClick={() => cardClicked(card)} />
+            </Flipped>
+          )}
+        </Cell>
       ))}
     </div>
   );

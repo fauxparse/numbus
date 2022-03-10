@@ -1,4 +1,5 @@
 import React from 'react';
+import { Flipped } from 'react-flip-toolkit';
 import Cell from '../Cell';
 import Equals from '../Equals';
 import Number from '../Number';
@@ -12,13 +13,25 @@ interface EquationProps extends Row {
 const Equation: React.FC<EquationProps> = ({ left, operator, right, result, onOperatorChange }) => {
   return (
     <div className="equation">
-      <Cell>{left && <Number {...left} />}</Cell>
+      <Cell className="cell--operand">
+        {left && (
+          <Flipped flipId={left.id}>
+            <Number {...left} />
+          </Flipped>
+        )}
+      </Cell>
       <Cell>
         <OperatorButton operator={operator} onChange={onOperatorChange} />
       </Cell>
-      <Cell>{right && <Number {...right} />}</Cell>
+      <Cell className="cell--operand">
+        {right && (
+          <Flipped flipId={right.id}>
+            <Number {...right} />
+          </Flipped>
+        )}
+      </Cell>
       <Equals />
-      <Cell>{result && <Number {...result} />}</Cell>
+      <Cell className="cell--operand">{result && <Number {...result} />}</Cell>
     </div>
   );
 };

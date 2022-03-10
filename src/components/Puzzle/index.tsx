@@ -5,6 +5,7 @@ import Equation from '../Equation';
 import Footer from '../Footer';
 import Target from '../Target';
 import './Puzzle.scss';
+import { Flipper } from 'react-flip-toolkit';
 
 const Puzzle: React.FC = () => {
   const engine = useEngine();
@@ -35,7 +36,7 @@ const Puzzle: React.FC = () => {
   if (!state) return null;
 
   return (
-    <div className="puzzle">
+    <Flipper flipKey={state.step} className="puzzle" spring="stiff">
       <div className="board">
         {state.rows.map((row, i) => (
           <Equation key={i} {...row} onOperatorChange={(op) => operatorChanged(i, op)} />
@@ -44,7 +45,7 @@ const Puzzle: React.FC = () => {
       <Footer cards={state.cards} onCardClicked={playNumber}>
         <Target target={state.target} total={total} />
       </Footer>
-    </div>
+    </Flipper>
   );
 };
 

@@ -21,13 +21,21 @@
     touch-action: none;
   }
 
-  &:empty {
-    color: var(--empty-foreground);
-    font-weight: var(--font-weight-bold);
-    font-size: var(--digit-size-1);
-
+  &--operand {
     &::after {
       content: "?";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--empty-foreground);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--digit-size-1);
     }
   }
 
