@@ -4,7 +4,7 @@ export const undo = (_action: Undo, state: State): State =>
 export const undoable =
   <T>(fn: (action: T, state: State) => State) =>
   (action: T, state: State) =>
-    addUndoState(fn(action, state), state);
+    state.solved ? state : addUndoState(fn(action, state), state);
 
 const addUndoState = ({ next, ...state }: State, previous: State): State => ({
   ...state,

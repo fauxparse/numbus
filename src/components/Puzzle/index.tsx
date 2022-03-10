@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import findLast from 'lodash/fp/findLast';
+import confetti, { shape } from 'canvas-confetti';
 import { useEngine } from '../../engine';
 import Equation from '../Equation';
 import Footer from '../Footer';
@@ -15,6 +16,59 @@ const Puzzle: React.FC = () => {
   const engine = useEngine();
 
   const { state } = engine;
+
+  const solved = state?.solved ?? false;
+
+  const fireConfetti = useCallback(() => {
+    const { x, y, width, height } = (
+      document.querySelector('.target') as HTMLElement
+    ).getBoundingClientRect();
+    const cx = (x + width / 2) / window.innerWidth;
+    const cy = (y + height / 2) / window.innerHeight;
+    const count = 200;
+    const defaults = {
+      origin: { x: cx, y: cy },
+      disableForReducedMotion: true,
+      colors: ['#06b6d4', '#ec4899', '#a855f7', '#eab308'],
+      shapes: ['square'] as shape[],
+    };
+
+    function fire(particleRatio: number, opts: Record<string, number>) {
+      confetti(
+        Object.assign({}, defaults, opts, {
+          particleCount: Math.floor(count * particleRatio),
+        })
+      );
+    }
+    fire(0.25, {
+      spread: 26,
+      startVelocity: 55,
+    });
+    fire(0.2, {
+      spread: 60,
+    });
+    fire(0.35, {
+      spread: 100,
+      decay: 0.91,
+      scalar: 0.8,
+    });
+    fire(0.1, {
+      spread: 120,
+      startVelocity: 25,
+      decay: 0.92,
+      scalar: 1.2,
+    });
+    fire(0.1, {
+      spread: 120,
+      startVelocity: 45,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (solved) {
+      fireConfetti();
+    }
+  }, [solved, fireConfetti]);
 
   const playNumber = useCallback(
     (card: Card) => {

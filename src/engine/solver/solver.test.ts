@@ -19,6 +19,7 @@ describe('solve', () => {
         { id: 6, number: 9, source: 'given' },
       ] as Card[],
       target: 334,
+      solved: false,
     };
   });
 

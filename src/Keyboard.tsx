@@ -20,9 +20,27 @@ const Keyboard: React.FC = ({ children }) => {
 
   const backspace = useCallback(() => setTyped((current) => Math.floor(current / 10)), []);
 
-  useHotkeys('0, 1, 2, 3, 4, 5, 6, 7, 8, 9', addDigit);
+  const playCard = useCallback(
+    (card: Card) => {
+      if (!state) return;
+      const row =
+        (state.rows.findIndex((r) => isNothing(r.left) || isNothing(r.right)) +
+          state.rows.length +
+          1) %
+        (state.rows.length + 1);
+      const side = isJust(state.rows[row].left) ? 'right' : 'left';
+      engine.use({ card, row, side });
+      setTyped(0);
+    },
+    [state, engine]
+  );
 
-  useHotkeys('backspace', backspace);
+  const enter = useCallback(() => {
+    if (!state) return;
+    console.log('enter', typed);
+    const card = state.cards.find((c) => c?.number === typed);
+    if (card) playCard(card);
+  }, [state, typed, playCard]);
 
   useEffect(() => {
     if (!state || !engine.use) return;
@@ -34,16 +52,9 @@ const Keyboard: React.FC = ({ children }) => {
     ) as Card[];
 
     if (uniq(matching.map((c) => c.number)).length === 1 && matching[0].number === typed) {
-      const row =
-        (state.rows.findIndex((r) => isNothing(r.left) || isNothing(r.right)) +
-          state.rows.length +
-          1) %
-        (state.rows.length + 1);
-      const side = isJust(state.rows[row].left) ? 'right' : 'left';
-      engine.use({ card: matching[0], row, side });
-      setTyped(0);
+      playCard(matching[0]);
     }
-  }, [state, engine, typed]);
+  }, [state, engine, typed, playCard]);
 
   const changeOperator = useCallback(
     (operator: Operator) => {
@@ -51,9 +62,9 @@ const Keyboard: React.FC = ({ children }) => {
 
       const row = state.rows.findIndex((row) => isNothing(row.operator));
 
-      if (row > -1) engine.operate({ row, operator });
+      if (row > -1) engine.operate({ row, operator, left: typed });
     },
-    [state, engine]
+    [state, engine, typed]
   );
 
   const add = useCallback(() => changeOperator('plus'), [changeOperator]);
@@ -61,10 +72,25 @@ const Keyboard: React.FC = ({ children }) => {
   const multiply = useCallback(() => changeOperator('times'), [changeOperator]);
   const divide = useCallback(() => changeOperator('divided'), [changeOperator]);
 
-  useHotkeys('shift+=, num_add', add);
-  useHotkeys('-, num_subtract', subtract);
-  useHotkeys('shift+8, num_multiply', multiply);
-  useHotkeys('/, num_divide', divide);
+  const undo = useCallback(() => {
+    if (state) engine.undo();
+  }, [engine, state]);
+
+  const redo = useCallback(() => {
+    if (state) engine.redo();
+  }, [engine, state]);
+
+  useHotkeys('0, 1, 2, 3, 4, 5, 6, 7, 8, 9', addDigit);
+  useHotkeys('backspace', backspace);
+  useHotkeys('enter', enter, [typed]);
+
+  useHotkeys('shift+=, num_add', add, [state, typed]);
+  useHotkeys('-, num_subtract', subtract, [state, typed]);
+  useHotkeys('shift+8, num_multiply', multiply, [state, typed]);
+  useHotkeys('/, num_divide', divide, [state, typed]);
+
+  useHotkeys('ctrl+z, command+z', undo, [state]);
+  useHotkeys('ctrl+shift+z, command+shift+z', redo, [state]);
 
   return <>{children}</>;
 };

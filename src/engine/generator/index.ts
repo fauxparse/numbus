@@ -37,7 +37,7 @@ const generate = (options: GeneratorOptions = {}): State => {
 
   const cards = numbers.map((number, i): Card => ({ id: i, number, source: 'given' }));
 
-  return { seed, cards, target, step: 0, rows: [blankRow()] };
+  return { seed, cards, target, step: 0, rows: [blankRow()], solved: false };
 };
 
 export default generate;

@@ -25,7 +25,7 @@ const use = (action: Use, state: State): State => {
     ),
     cards: cleared.cards.map((card) => (card?.id === action.card?.id ? null : card)),
   });
-  if (last(newState.rows)?.result) {
+  if (last(newState.rows)?.result && !newState.solved) {
     return {
       ...newState,
       rows: [...newState.rows, blankRow()],

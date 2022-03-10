@@ -18,6 +18,7 @@ describe('actions', () => {
         { id: 6, number: 9, source: 'given' },
       ] as Card[],
       target: 334,
+      solved: false,
     };
   });
 
@@ -161,6 +162,16 @@ describe('actions', () => {
 
       it('inserts a blank row', () => {
         expect(state.rows.length).toBe(2);
+      });
+
+      describe('and an operator is placed on the new row', () => {
+        beforeEach(() => {
+          state = perform({ action: 'operate', row: 1, operator: 'times' }, state);
+        });
+
+        it('copies the result from the previous row', () => {
+          expect(state.rows[1].left).toBe(state.rows[0].result);
+        });
       });
     });
   });

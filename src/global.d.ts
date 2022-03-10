@@ -35,6 +35,7 @@ type State = Immutable<{
   target: number;
   previous?: State;
   next?: State;
+  solved: boolean;
 }>;
 
 type Use = Immutable<{
@@ -53,6 +54,7 @@ type Operate = Immutable<{
   action: 'operate';
   row: number;
   operator: Maybe<Operator>;
+  left?: number;
 }>;
 
 type Undo = Immutable<{
