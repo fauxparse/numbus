@@ -3,17 +3,20 @@ import Drawer from './components/Drawer';
 import Puzzle from './components/Puzzle';
 import { EngineProvider } from './engine';
 import './App.scss';
+import Keyboard from './Keyboard';
 
 const App = () => (
   <EngineProvider>
-    <div className="app">
-      <Drawer>
-        <Header />
-      </Drawer>
-      <div className="app__body">
-        <Puzzle />
+    <Keyboard>
+      <div className="app">
+        <Drawer>
+          <Header />
+        </Drawer>
+        <div className="app__body">
+          <Puzzle />
+        </div>
       </div>
-    </div>
+    </Keyboard>
   </EngineProvider>
 );
 
