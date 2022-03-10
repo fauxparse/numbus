@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import findLast from 'lodash/fp/findLast';
 import { useEngine } from '../../engine';
 import Equation from '../Equation';
@@ -21,7 +21,6 @@ const Puzzle: React.FC = () => {
       if (state) {
         const row = state.rows.findIndex((r) => !r.left || !r.right);
         const side = state.rows[row].left ? 'right' : 'left';
-        console.log(row, side);
         const target = board.current?.querySelector(`[data-row="${row}"][data-side="${side}"]`);
         const source = footer.current?.querySelector(`[data-id="${card.id}"]`);
         if (source && target) {
@@ -72,13 +71,6 @@ const Puzzle: React.FC = () => {
     [state, engine]
   );
 
-  const droppedOnFooter = useCallback(
-    (e) => {
-      if (state && !state.cards.includes(e.detail.card)) engine.unuse({ card: e.detail.card });
-    },
-    [state, engine]
-  );
-
   useEffect(() => {
     const boardElement = board.current;
     if (boardElement) {
@@ -87,19 +79,50 @@ const Puzzle: React.FC = () => {
     }
   }, [footer, droppedOnBoard]);
 
+  const before = useRef<HTMLDivElement>(null);
+  const after = useRef<HTMLDivElement>(null);
+
+  const [startVisible, setStartVisible] = useState(true);
+  const [endVisible, setEndVisible] = useState(true);
+
   useEffect(() => {
-    const footerElement = footer.current;
-    if (footerElement) {
-      footerElement.addEventListener('dropcard', droppedOnFooter);
-      return () => footerElement.removeEventListener('dropcard', droppedOnFooter);
-    }
-  }, [footer, droppedOnFooter]);
+    const container = board.current as HTMLElement;
+
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          switch ((target as HTMLElement).dataset.edge) {
+            case 'before':
+              setStartVisible(isIntersecting);
+              break;
+            case 'after':
+              setEndVisible(isIntersecting);
+              break;
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+
+    container.querySelectorAll('.edge').forEach((el) => {
+      intersectionObserver.observe(el);
+    });
+
+    return () => {
+      intersectionObserver.disconnect();
+    };
+  }, []);
 
   if (!state) return null;
 
   return (
-    <div className="puzzle">
+    <div
+      className="puzzle"
+      data-start-visible={startVisible || undefined}
+      data-end-visible={endVisible || undefined}
+    >
       <div className="board" ref={board}>
+        <div className="edge" data-edge="before" ref={before} />
         {state.rows.map((row, i) => (
           <Equation
             key={i}
@@ -109,6 +132,7 @@ const Puzzle: React.FC = () => {
             onCardClicked={unplayNumber}
           />
         ))}
+        <div className="edge" data-edge="after" ref={after} />
       </div>
       <Footer ref={footer} cards={state.cards} onCardClicked={playNumber}>
         <Target target={state.target} total={total} />

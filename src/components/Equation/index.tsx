@@ -1,8 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useLayoutEffect, useRef } from 'react';
 import Cell from '../Cell';
 import Equals from '../Equals';
 import Number from '../Number';
-import DraggableNumber from '../Number/DraggableNumber';
 import OperatorButton from '../OperatorButton';
 import './Equation.scss';
 
@@ -28,15 +27,21 @@ const Equation: React.FC<EquationProps> = ({
     [onCardClicked]
   );
 
+  const container = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    container.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, []);
+
   return (
-    <div className="equation">
+    <div className="equation" ref={container}>
       <Cell
         className="cell--operand"
         data-row={row}
         data-side="left"
         droppable={!left || undefined}
       >
-        {left && <DraggableNumber {...left} onClick={() => cardClicked(left)} />}
+        {left && <Number {...left} onClick={() => cardClicked(left)} />}
       </Cell>
       <Cell>
         <OperatorButton operator={operator} onChange={onOperatorChange} />
@@ -47,7 +52,7 @@ const Equation: React.FC<EquationProps> = ({
         data-side="right"
         droppable={!right || undefined}
       >
-        {right && <DraggableNumber {...right} onClick={() => cardClicked(right)} />}
+        {right && <Number {...right} onClick={() => cardClicked(right)} />}
       </Cell>
       <Equals />
       <Cell className="cell--operand">{result && <Number {...result} />}</Cell>

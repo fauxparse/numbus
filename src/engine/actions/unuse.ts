@@ -14,7 +14,7 @@ const remove = (card: Maybe<Card>, state: State): State => {
 
   return remove(row.result, {
     ...state,
-    rows: rows.map((r) => (r === row ? { ...r, [side]: null } : r)),
+    rows: rows.map((r) => (r === row ? { ...r, [side]: null, operator: null } : r)),
   });
 };
 
@@ -35,7 +35,9 @@ const unuse = (action: Unuse, state: State): State => {
 
   return calculate({
     ...newState,
-    rows: newState.rows.map((r) => (r[side]?.id === id ? { ...r, [side]: null } : r)),
+    rows: newState.rows.map((r) =>
+      r[side]?.id === id ? { ...r, [side]: null, operator: null } : r
+    ),
   });
 };
 
