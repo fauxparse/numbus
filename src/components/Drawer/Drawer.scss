@@ -9,6 +9,16 @@
   transition: transform 0.5s var(--easing-standard);
   transform: translateY(calc(var(--header-height) - 100%));
 
+  &::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: 100px;
+    background: inherit;
+  }
+
   .header {
     position: absolute;
     right: 0;

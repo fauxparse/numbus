@@ -4,15 +4,13 @@ html {
 
 .app {
   position: fixed;
-  top: 0;
+  top: var(--safe-area-inset-top);
   right: 0;
+  bottom: calc(var(--safe-area-inset-bottom) - 40px);
   left: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  overflow: hidden;
-  height: 100vh;
-  max-height: -webkit-fill-available;
 
   &__body {
     position: absolute;

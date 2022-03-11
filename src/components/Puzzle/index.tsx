@@ -25,12 +25,13 @@ const Puzzle: React.FC = () => {
     ).getBoundingClientRect();
     const cx = (x + width / 2) / window.innerWidth;
     const cy = (y + height / 2) / window.innerHeight;
-    const count = 200;
+    const count = 300;
     const defaults = {
       origin: { x: cx, y: cy },
       disableForReducedMotion: true,
       colors: ['#06b6d4', '#ec4899', '#a855f7', '#eab308'],
-      shapes: ['square'] as shape[],
+      shapes: ['circle'] as shape[],
+      useWorker: true,
     };
 
     function fire(particleRatio: number, opts: Record<string, number>) {

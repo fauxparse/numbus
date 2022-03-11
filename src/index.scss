@@ -83,6 +83,9 @@
     0 0.8rem 1rem -0.5rem var(--shadow-umbra);
   --shadow-32: 0 0.9rem 4.6rem 0.8rem var(--shadow-ambient), 0 2.4rem 3.8rem 0.3rem var(--shadow-penumbra),
     0 1.1rem 1.5rem -0.7rem var(--shadow-umbra);
+
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
 }
 
 *,
