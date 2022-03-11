@@ -7,6 +7,7 @@
   overflow: hidden;
   width: var(--cell-size);
   height: var(--cell-size);
+  padding: 0;
   border: var(--border-width) solid var(--number-border);
   border-radius: var(--border-radius);
   background-color: var(--number-background);
