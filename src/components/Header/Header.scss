@@ -40,6 +40,10 @@
 
     path {
       fill: currentColor;
+
+      + path {
+        fill: var(--background);
+      }
     }
 
     &:active {
