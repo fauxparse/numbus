@@ -3,6 +3,7 @@ import unuse from './unuse';
 import operate from './operate';
 import undo, { undoable } from './undo';
 import redo from './redo';
+import newGame from './newGame';
 
 const actions: Record<Action['action'], any> = {
   use: undoable(use),
@@ -10,6 +11,7 @@ const actions: Record<Action['action'], any> = {
   operate: undoable(operate),
   undo,
   redo,
+  new: newGame,
 };
 
 export const perform = (action: Action, state: State): State =>

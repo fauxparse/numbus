@@ -5,8 +5,6 @@ import { blankRow } from '../actions/helpers';
 export const BIG_ONES = [25, 50, 75, 100];
 export const LITTLE_ONES = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10];
 
-type GeneratorOptions = { big?: number; seed?: string };
-
 export const hashids = new Hashids(
   'NUMBUS',
   4,

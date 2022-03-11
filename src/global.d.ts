@@ -65,7 +65,15 @@ type Redo = Immutable<{
   action: 'redo';
 }>;
 
-type Action = Use | Unuse | Operate | Undo | Redo;
+type GeneratorOptions = { big?: number; seed?: string };
+
+type NewGame = Immutable<
+  {
+    action: 'new';
+  } & GeneratorOptions
+>;
+
+type Action = Use | Unuse | Operate | Undo | Redo | NewGame;
 
 type Step = {
   left: number;

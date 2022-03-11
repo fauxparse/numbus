@@ -1,6 +1,9 @@
 import React, { createContext, useCallback, useState } from 'react';
 import Slider from './Slider';
 import './Drawer.scss';
+import { useLocalStorage } from 'react-use';
+import Button from '../Button';
+import { useEngine } from '../../engine';
 
 type DrawerContextShape = {
   expanded: boolean;
@@ -13,11 +16,21 @@ export const DrawerContext = createContext<DrawerContextShape>({
 });
 
 const Drawer: React.FC = ({ children }) => {
+  const engine = useEngine();
+
   const [expanded, setExpanded] = useState(false);
+
+  const [bigOnes, setBigOnes] = useLocalStorage<number>('bigOnes', 2);
 
   const toggle = useCallback(() => {
     setExpanded((current) => !current);
   }, []);
+
+  const newGameClicked = useCallback(() => {
+    if (!engine.state) return;
+    engine.newGame({ big: bigOnes });
+    setExpanded(false);
+  }, [engine, bigOnes]);
 
   return (
     <DrawerContext.Provider value={{ expanded, toggle }}>
@@ -55,8 +68,10 @@ const Drawer: React.FC = ({ children }) => {
                   .
                 </p>
               </div>
-              <Slider />
-              <div className="drawer__buttons"></div>
+              <Slider value={bigOnes || 2} onChange={setBigOnes} />
+              <div className="drawer__buttons">
+                <Button onClick={newGameClicked}>New game</Button>
+              </div>
             </div>
           </aside>
         </div>

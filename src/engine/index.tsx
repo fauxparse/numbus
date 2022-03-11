@@ -11,6 +11,7 @@ type EngineContextShape =
       operate: (action: Omit<Operate, 'action'>) => void;
       undo: () => void;
       redo: () => void;
+      newGame: (options: GeneratorOptions) => void;
     };
 
 export const EngineContext = createContext<EngineContextShape>({ state: null });
@@ -31,9 +32,11 @@ export const EngineProvider: React.FC = ({ children }) => {
 
   const redo = () => dispatch({ action: 'redo' });
 
+  const newGame = (options: GeneratorOptions) => dispatch({ action: 'new', ...options });
+
   return (
     <EngineContext.Provider
-      value={state ? { state, use, unuse, operate, undo, redo } : { state: null }}
+      value={state ? { state, use, unuse, operate, undo, redo, newGame } : { state: null }}
     >
       {children}
     </EngineContext.Provider>

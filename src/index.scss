@@ -66,13 +66,16 @@
   --header-background: rgba(0, 0, 0, 0.25);
   --header-foreground: var(--cyan-050);
   --ui-width: calc(var(--cell-size) * 5 + var(--equation-spacing) * 4);
+  --button-light: var(--pink-500);
+  --button-dark: var(--pink-700);
+  --button-text: var(--pink-050);
 
   --shadow-umbra: rgba(0, 0, 0, 0.2);
   --shadow-penumbra: rgba(0, 0, 0, 0.14);
   --shadow-ambient: rgba(0, 0, 0, 0.12);
-  --shadow-1: 0 0.2rem 0.1rem -0.1rem var(--shadow-ambient), 0 0.1rem 0.1rem 0 var(shadow-penumbra),
+  --shadow-1: 0 0.2rem 0.1rem -0.1rem var(--shadow-ambient), 0 0.1rem 0.1rem 0 var(--shadow-penumbra),
     0 0.1rem 0.3rem 0 var(--shadow-umbra);
-  --shadow-4: 0 0.2rem 0.4rem -0.1rem var(--shadow-ambient), 0 0.4rem 0.5rem 0 var(shadow-penumbra),
+  --shadow-4: 0 0.2rem 0.4rem -0.1rem var(--shadow-ambient), 0 0.4rem 0.5rem 0 var(--shadow-penumbra),
     0 0.1rem 1rem 0 var(--shadow-umbra);
   --shadow-8: 0 0.3rem 1.4rem 0.2rem var(--shadow-ambient), 0 0.8rem 1rem 0.1rem var(--shadow-penumbra),
     0 0.5rem 0.5rem -0.3rem var(--shadow-umbra);

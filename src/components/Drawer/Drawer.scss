@@ -58,6 +58,10 @@
     right: 0;
     bottom: calc(var(--header-height) + var(--border-width));
     left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     overflow: auto;
     padding: 2rem 0;
   }
@@ -76,16 +80,12 @@
     }
   }
 
-  // &__buttons {
-  //   display: flex;
-  //   gap: 1rem;
-  //   align-items: center;
-  //   justify-content: center;
-
-  //   .button {
-  //     font-size: 1.25rem;
-  //   }
-  // }
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
 
   .how-to-play {
     font-size: 0.875rem;
