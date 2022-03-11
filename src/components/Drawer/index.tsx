@@ -4,6 +4,7 @@ import './Drawer.scss';
 import { useLocalStorage } from 'react-use';
 import Button from '../Button';
 import { useEngine } from '../../engine';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 type DrawerContextShape = {
   expanded: boolean;
@@ -31,6 +32,8 @@ const Drawer: React.FC = ({ children }) => {
     engine.newGame({ big: bigOnes });
     setExpanded(false);
   }, [engine, bigOnes]);
+
+  useHotkeys('ctrl+n, command+n', newGameClicked, [engine, bigOnes]);
 
   return (
     <DrawerContext.Provider value={{ expanded, toggle }}>

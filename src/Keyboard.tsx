@@ -37,7 +37,6 @@ const Keyboard: React.FC = ({ children }) => {
 
   const enter = useCallback(() => {
     if (!state) return;
-    console.log('enter', typed);
     const card = state.cards.find((c) => c?.number === typed);
     if (card) playCard(card);
   }, [state, typed, playCard]);
@@ -80,6 +79,10 @@ const Keyboard: React.FC = ({ children }) => {
     if (state) engine.redo();
   }, [engine, state]);
 
+  const hint = useCallback(() => {
+    if (state) engine.hint();
+  }, [engine, state]);
+
   useHotkeys('0, 1, 2, 3, 4, 5, 6, 7, 8, 9', addDigit);
   useHotkeys('backspace', backspace);
   useHotkeys('enter', enter, [typed]);
@@ -91,6 +94,8 @@ const Keyboard: React.FC = ({ children }) => {
 
   useHotkeys('ctrl+z, command+z', undo, [state]);
   useHotkeys('ctrl+shift+z, command+shift+z', redo, [state]);
+
+  useHotkeys('ctrl+h', hint, [state]);
 
   return <>{children}</>;
 };

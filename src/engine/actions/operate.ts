@@ -4,7 +4,7 @@ const operate = (action: Operate, state: State): State => {
   let card: Maybe<Card> = null;
   if (action.left) {
     card = state.cards.find((c) => c?.number === action.left) || null;
-  } else if (action.row > 0) {
+  } else if (action.row > 0 && !state.rows[action.row].left) {
     const result = state.rows[action.row - 1].result;
     if (result && state.cards.includes(result)) {
       card = result;

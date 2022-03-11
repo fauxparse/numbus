@@ -73,7 +73,9 @@ type NewGame = Immutable<
   } & GeneratorOptions
 >;
 
-type Action = Use | Unuse | Operate | Undo | Redo | NewGame;
+type Solve = Immutable<{ action: 'solve'; steps?: number }>;
+
+type Action = Use | Unuse | Operate | Undo | Redo | NewGame | Solve;
 
 type Step = {
   left: number;

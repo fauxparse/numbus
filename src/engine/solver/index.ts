@@ -35,7 +35,16 @@ export function* solve(initialState: State, options: SolveOptions = {}): Generat
   const max = options.max || Infinity;
   const open = priorityQueue<{ steps: Step[]; numbers: number[] }>();
   const { cards, target } = initialState;
-  const numbers = sortBy([(n) => -n], cards.map((c) => c?.number).filter(Boolean) as number[]);
+  const partialRows = initialState.rows.filter((row) => !row.left || !row.right);
+  const numbers = sortBy(
+    [(n) => -n],
+    [
+      ...(cards.map((c) => c?.number).filter(Boolean) as number[]),
+      ...(partialRows
+        .flatMap((row) => [row.left?.number, row.right?.number])
+        .filter(Boolean) as number[]),
+    ]
+  );
   open.insert({ steps: [], numbers }, target);
   const closed = new Set<string>();
 

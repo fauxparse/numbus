@@ -215,4 +215,20 @@ describe('actions', () => {
       });
     });
   });
+
+  describe('solve', () => {
+    describe('from a clean state', () => {
+      beforeEach(() => {
+        state = perform({ action: 'solve' }, state);
+      });
+
+      it('solves the puzzle', () => {
+        expect(state.solved).toBe(true);
+      });
+
+      it('breaks down the steps', () => {
+        expect(state.previous?.previous).not.toBeFalsy();
+      });
+    });
+  });
 });
