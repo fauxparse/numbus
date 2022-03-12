@@ -68,7 +68,16 @@ const Drawer: React.FC = ({ children }) => {
                   >
                     Countdown
                   </a>
-                  .
+                  <br />
+                  Made with 💖 by{' '}
+                  <a href="https://github.com/fauxparse" target="_blank" rel="noopener noreferrer">
+                    Matt Powell
+                  </a>{' '}
+                  (
+                  <a href="https://twitter.com/fauxparse" target="_blank" rel="noopener noreferrer">
+                    @fauxparse
+                  </a>
+                  )
                 </p>
               </div>
               <Slider value={bigOnes || 2} onChange={setBigOnes} />

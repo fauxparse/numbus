@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import findLast from 'lodash/fp/findLast';
 import confetti, { shape } from 'canvas-confetti';
+import gsap from 'gsap';
 import { useEngine } from '../../engine';
 import Equation from '../Equation';
 import Footer from '../Footer';
 import Target from '../Target';
+import { useNotices } from '../Notice/Notices';
 import './Puzzle.scss';
-import gsap from 'gsap';
 
 const Puzzle: React.FC = () => {
+  const notify = useNotices();
+
   const board = useRef<HTMLDivElement>(null);
 
   const footer = useRef<HTMLDivElement>(null);
@@ -17,17 +20,9 @@ const Puzzle: React.FC = () => {
 
   const { state } = engine;
 
-  const solved = state?.solved ?? false;
-
   const fireConfetti = useCallback(() => {
-    const { x, y, width, height } = (
-      document.querySelector('.target') as HTMLElement
-    ).getBoundingClientRect();
-    const cx = (x + width / 2) / window.innerWidth;
-    const cy = (y + height / 2) / window.innerHeight;
     const count = 300;
     const defaults = {
-      origin: { x: cx, y: cy },
       disableForReducedMotion: true,
       colors: ['#06b6d4', '#ec4899', '#a855f7', '#eab308'],
       shapes: ['circle'] as shape[],
@@ -66,10 +61,28 @@ const Puzzle: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (solved) {
+    if (state?.solved) {
       fireConfetti();
+      notify({
+        title: 'You did it.',
+        children: (
+          <p>
+            Congratulations! You made the target
+            {!!state.hints && (
+              <>
+                <br />
+                (with a little help)
+              </>
+            )}
+            .
+          </p>
+        ),
+        button: 'New game',
+      }).then(() => {
+        engine.newGame();
+      });
     }
-  }, [solved, fireConfetti]);
+  }, [state, engine, fireConfetti, notify]);
 
   const playNumber = useCallback(
     (card: Card) => {

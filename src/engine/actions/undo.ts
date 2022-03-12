@@ -1,6 +1,5 @@
 export const undo = (_action: Undo, state: State): State => {
-  console.log(state.previous);
-  return state.previous ? { ...state.previous, next: state } : state;
+  return state.previous ? { ...state.previous, next: state, hints: state.hints } : state;
 };
 
 export const undoable =

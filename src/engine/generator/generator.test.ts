@@ -1,4 +1,4 @@
-import generate, { BIG_ONES, hashids, LITTLE_ONES } from '.';
+import generate, { BIG_ONES, LITTLE_ONES } from '.';
 
 describe('generate', () => {
   let state: State;

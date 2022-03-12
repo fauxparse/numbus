@@ -6,14 +6,20 @@
   color: var(--button-text);
   box-shadow: var(--shadow-4);
   font-weight: var(--font-weight-semibold);
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1.5;
   text-transform: uppercase;
+  cursor: pointer;
   transition: all 0.15s var(--easing-standard);
 
   &:active {
     background-color: var(--button-dark);
     box-shadow: var(--shadow-1);
     transform: translateY(1px);
+  }
+
+  &:focus {
+    box-shadow: var(--shadow-1), 0 0 0 0.25em var(--focus);
+    outline: none;
   }
 }

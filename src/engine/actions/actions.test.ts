@@ -19,6 +19,7 @@ describe('actions', () => {
       ] as Card[],
       target: 334,
       solved: false,
+      hints: 0,
     };
   });
 

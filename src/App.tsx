@@ -4,20 +4,23 @@ import Puzzle from './components/Puzzle';
 import { EngineProvider } from './engine';
 import './App.scss';
 import Keyboard from './Keyboard';
+import Notices from './components/Notice/Notices';
 
 const App = () => (
-  <EngineProvider>
-    <Keyboard>
-      <div className="app">
-        <Drawer>
-          <Header />
-        </Drawer>
-        <div className="app__body">
-          <Puzzle />
+  <Notices>
+    <EngineProvider>
+      <Keyboard>
+        <div className="app">
+          <Drawer>
+            <Header />
+          </Drawer>
+          <div className="app__body">
+            <Puzzle />
+          </div>
         </div>
-      </div>
-    </Keyboard>
-  </EngineProvider>
+      </Keyboard>
+    </EngineProvider>
+  </Notices>
 );
 
 export default App;

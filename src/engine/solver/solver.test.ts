@@ -20,6 +20,7 @@ describe('solve', () => {
       ] as Card[],
       target: 334,
       solved: false,
+      hints: 0,
     };
   });
 

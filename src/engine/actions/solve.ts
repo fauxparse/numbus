@@ -19,7 +19,10 @@ const solveAction = ({ steps: max = -1 }: Solve, state: State): State => {
   for (const solution of solve(clearPartialRows(state), { max: 1 })) {
     if (!solution.steps.length) continue;
     const steps = max > 0 ? solution.steps.slice(0, max) : solution.steps;
-    return steps.reduce((accumulator, step) => applyStep(step, accumulator), state);
+    return steps.reduce(
+      (accumulator, step) => ({ ...applyStep(step, accumulator), hints: accumulator.hints + 1 }),
+      state
+    );
   }
   return state;
 };
