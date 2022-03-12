@@ -1,0 +1,55 @@
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+  &__number {
+    text-transform: uppercase;
+
+    b {
+      display: block;
+      font-weight: var(--font-weight-semibold);
+      font-size: 1.5rem;
+    }
+
+    span {
+      display: block;
+      font-size: 0.875rem;
+      opacity: 0.75;
+    }
+
+    &[data-stat="solo"] b {
+      color: var(--stat-solo);
+    }
+    &[data-stat="assisted"] b {
+      color: var(--stat-assisted);
+    }
+    &[data-stat="abandoned"] b {
+      color: var(--stat-abandoned);
+    }
+  }
+
+  &__bar {
+    display: flex;
+    grid-column: 1 / span 3;
+    overflow: hidden;
+    height: 1rem;
+    border-radius: 0.25rem;
+    background-color: var(--empty-border);
+  }
+
+  &__stat {
+    flex: var(--value) 0 0;
+    transition: all 0.15s var(easing-standard);
+
+    &[data-stat="solo"] {
+      background-color: var(--stat-solo);
+    }
+    &[data-stat="assisted"] {
+      background-color: var(--stat-assisted);
+    }
+    &[data-stat="abandoned"] {
+      background-color: var(--stat-abandoned);
+    }
+  }
+}

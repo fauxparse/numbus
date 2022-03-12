@@ -87,3 +87,9 @@ type Step = {
 };
 
 type Solution = { steps: Step[] };
+
+type Statistics = {
+  solo: number;
+  assisted: number;
+  abandoned: number;
+};

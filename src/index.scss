@@ -87,6 +87,10 @@
 
   --safe-area-inset-top: env(safe-area-inset-top);
   --safe-area-inset-bottom: env(safe-area-inset-bottom);
+
+  --stat-solo: var(--number-background-target);
+  --stat-assisted: var(--number-background-calculated);
+  --stat-abandoned: var(--number-background-given);
 }
 
 *,

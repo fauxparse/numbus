@@ -1,4 +1,5 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useCallback, useContext, useEffect, useReducer } from 'react';
+import { Statistic, useStatistics } from '../components/Stats';
 import { perform } from './actions';
 import generate from './generator';
 
@@ -30,21 +31,46 @@ const reducer = (state: Maybe<State>, action: Action): Maybe<State> => {
 export const EngineProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, null, () => generate());
 
-  const use = (action: Omit<Use, 'action'>) => dispatch({ action: 'use', ...action });
+  const use = useCallback(
+    (action: Omit<Use, 'action'>) => dispatch({ action: 'use', ...action }),
+    []
+  );
 
-  const unuse = (action: Omit<Unuse, 'action'>) => dispatch({ action: 'unuse', ...action });
+  const unuse = useCallback(
+    (action: Omit<Unuse, 'action'>) => dispatch({ action: 'unuse', ...action }),
+    []
+  );
 
-  const operate = (action: Omit<Operate, 'action'>) => dispatch({ action: 'operate', ...action });
+  const operate = useCallback(
+    (action: Omit<Operate, 'action'>) => dispatch({ action: 'operate', ...action }),
+    []
+  );
 
-  const undo = () => dispatch({ action: 'undo' });
+  const undo = useCallback(() => dispatch({ action: 'undo' }), []);
 
-  const redo = () => dispatch({ action: 'redo' });
+  const redo = useCallback(() => dispatch({ action: 'redo' }), []);
 
-  const newGame = (options: GeneratorOptions = {}) => dispatch({ action: 'new', ...options });
+  const [, increment] = useStatistics();
 
-  const solve = () => dispatch({ action: 'solve' });
+  const newGame = useCallback(
+    (options: GeneratorOptions = {}) => {
+      if (state && !state.solved) {
+        increment(Statistic.Abandoned);
+      }
+      dispatch({ action: 'new', ...options });
+    },
+    [state, increment]
+  );
 
-  const hint = () => dispatch({ action: 'solve', steps: 1 });
+  useEffect(() => {
+    if (state?.solved && !state.previous?.solved) {
+      increment(state.hints ? Statistic.Assisted : Statistic.Solo);
+    }
+  }, [state, increment]);
+
+  const solve = useCallback(() => dispatch({ action: 'solve' }), []);
+
+  const hint = useCallback(() => dispatch({ action: 'solve', steps: 1 }), []);
 
   return (
     <EngineContext.Provider

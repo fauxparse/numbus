@@ -5,6 +5,7 @@ import { useLocalStorage } from 'react-use';
 import Button from '../Button';
 import { useEngine } from '../../engine';
 import { useHotkeys } from 'react-hotkeys-hook';
+import Stats, { useStatistics } from '../Stats';
 
 type DrawerContextShape = {
   expanded: boolean;
@@ -21,7 +22,7 @@ const Drawer: React.FC = ({ children }) => {
 
   const [expanded, setExpanded] = useState(false);
 
-  const [bigOnes, setBigOnes] = useLocalStorage<number>('bigOnes', 2);
+  const [bigOnes, setBigOnes] = useLocalStorage<number>('numbus.bigOnes', 2);
 
   const toggle = useCallback(() => {
     setExpanded((current) => !current);
@@ -34,6 +35,8 @@ const Drawer: React.FC = ({ children }) => {
   }, [engine, bigOnes]);
 
   useHotkeys('ctrl+n, command+n', newGameClicked, [engine, bigOnes]);
+
+  const [stats] = useStatistics();
 
   return (
     <DrawerContext.Provider value={{ expanded, toggle }}>
@@ -80,6 +83,7 @@ const Drawer: React.FC = ({ children }) => {
                   )
                 </p>
               </div>
+              <Stats {...stats} />
               <Slider value={bigOnes || 2} onChange={setBigOnes} />
               <div className="drawer__buttons">
                 <Button onClick={newGameClicked}>New game</Button>

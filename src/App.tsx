@@ -5,22 +5,25 @@ import { EngineProvider } from './engine';
 import './App.scss';
 import Keyboard from './Keyboard';
 import Notices from './components/Notice/Notices';
+import { StatsProvider } from './components/Stats';
 
 const App = () => (
-  <Notices>
-    <EngineProvider>
-      <Keyboard>
-        <div className="app">
-          <Drawer>
-            <Header />
-          </Drawer>
-          <div className="app__body">
-            <Puzzle />
+  <StatsProvider>
+    <Notices>
+      <EngineProvider>
+        <Keyboard>
+          <div className="app">
+            <Drawer>
+              <Header />
+            </Drawer>
+            <div className="app__body">
+              <Puzzle />
+            </div>
           </div>
-        </div>
-      </Keyboard>
-    </EngineProvider>
-  </Notices>
+        </Keyboard>
+      </EngineProvider>
+    </Notices>
+  </StatsProvider>
 );
 
 export default App;

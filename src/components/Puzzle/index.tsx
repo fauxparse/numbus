@@ -60,6 +60,8 @@ const Puzzle: React.FC = () => {
     });
   }, []);
 
+  const newGame = state && engine?.newGame;
+
   useEffect(() => {
     if (state?.solved) {
       fireConfetti();
@@ -74,7 +76,7 @@ const Puzzle: React.FC = () => {
         ),
         buttons: { new: 'New game', close: 'Close' },
       }).then((next: string | null) => {
-        if (next === 'new') engine.newGame();
+        if (next === 'new' && newGame) newGame();
       });
     } else if (state?.stuck) {
       notify({
@@ -87,10 +89,10 @@ const Puzzle: React.FC = () => {
         ),
         buttons: { close: 'Close' },
       }).then((next: string | null) => {
-        if (next === 'new') engine.newGame();
+        if (next === 'new' && newGame) newGame();
       });
     }
-  }, [state, engine, fireConfetti, notify]);
+  }, [state, newGame, fireConfetti, notify]);
 
   const playNumber = useCallback(
     (card: Card) => {
