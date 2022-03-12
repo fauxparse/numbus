@@ -50,7 +50,7 @@ const trim = (state: State): State => {
   const isEmpty = (row: Row): boolean => !row.left && !row.right;
   const firstEmptyRow = state.rows.findIndex(isEmpty);
   return firstEmptyRow > -1
-    ? { ...state, rows: state.rows.slice(0, firstEmptyRow + (state.solved ? 0 : 1)) }
+    ? { ...state, rows: state.rows.filter((row, i) => !isEmpty(row) || i === firstEmptyRow) }
     : state;
 };
 
@@ -72,7 +72,7 @@ const calculate = (initial: State): State =>
       : null;
 
     if (row.result?.number === newResult?.number) {
-      return state;
+      return trim(state);
     }
 
     return trim(
