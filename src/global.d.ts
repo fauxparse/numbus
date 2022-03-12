@@ -37,6 +37,7 @@ type State = Immutable<{
   next?: State;
   solved: boolean;
   hints: number;
+  stuck?: boolean;
 }>;
 
 type Use = Immutable<{

@@ -76,6 +76,19 @@ const Puzzle: React.FC = () => {
       }).then((next: string | null) => {
         if (next === 'new') engine.newGame();
       });
+    } else if (state?.stuck) {
+      notify({
+        title: 'You can’t get there from here.',
+        children: (
+          <p>
+            Sorry, I don’t see a way to get {state.target} from these numbers. Try retracing your
+            steps.
+          </p>
+        ),
+        buttons: { close: 'Close' },
+      }).then((next: string | null) => {
+        if (next === 'new') engine.newGame();
+      });
     }
   }, [state, engine, fireConfetti, notify]);
 
