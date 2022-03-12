@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/numbus/static/css/main.4f98fafd.css",
+    "main.js": "/numbus/static/js/main.fc4e3f26.js",
+    "static/js/787.e55c16d6.chunk.js": "/numbus/static/js/787.e55c16d6.chunk.js",
+    "index.html": "/numbus/index.html",
+    "main.4f98fafd.css.map": "/numbus/static/css/main.4f98fafd.css.map",
+    "main.fc4e3f26.js.map": "/numbus/static/js/main.fc4e3f26.js.map",
+    "787.e55c16d6.chunk.js.map": "/numbus/static/js/787.e55c16d6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4f98fafd.css",
+    "static/js/main.fc4e3f26.js"
+  ]
+}
