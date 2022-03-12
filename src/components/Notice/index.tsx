@@ -10,12 +10,12 @@ export type NoticeState = 'open' | 'closing';
 export interface NoticeProps extends ComponentProps<'div'> {
   state: NoticeState;
   title: string;
-  button: string;
-  onClose?: () => void;
+  buttons: Record<string, string>;
+  onClose?: (id: string | null) => void;
   onClosed?: () => void;
 }
 
-const Notice: React.FC<NoticeProps> = ({ state, title, button, onClose, onClosed, children }) => {
+const Notice: React.FC<NoticeProps> = ({ state, title, buttons, onClose, onClosed, children }) => {
   const ref = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -23,7 +23,7 @@ const Notice: React.FC<NoticeProps> = ({ state, title, button, onClose, onClosed
     (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (onClose) onClose();
+      if (onClose) onClose(null);
     },
     [onClose]
   );
@@ -61,9 +61,11 @@ const Notice: React.FC<NoticeProps> = ({ state, title, button, onClose, onClosed
       <h3 className="notice__title">{title}</h3>
       <div className="notice__content">{children}</div>
       <div className="notice__buttons">
-        <Button ref={buttonRef} onClick={onClose}>
-          {button}
-        </Button>
+        {Object.entries(buttons).map(([id, label], i) => (
+          <Button key={id} ref={i ? undefined : buttonRef} onClick={() => onClose && onClose(id)}>
+            {label}
+          </Button>
+        ))}
       </div>
     </div>
   );

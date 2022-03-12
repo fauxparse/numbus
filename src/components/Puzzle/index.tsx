@@ -68,18 +68,13 @@ const Puzzle: React.FC = () => {
         children: (
           <p>
             Congratulations! You made the target
-            {!!state.hints && (
-              <>
-                <br />
-                (with a little help)
-              </>
-            )}
-            .
+            <br />
+            {state.hints ? '(with a little help)' : 'all by yourself'}.
           </p>
         ),
-        button: 'New game',
-      }).then(() => {
-        engine.newGame();
+        buttons: { new: 'New game', close: 'Close' },
+      }).then((next: string | null) => {
+        if (next === 'new') engine.newGame();
       });
     }
   }, [state, engine, fireConfetti, notify]);

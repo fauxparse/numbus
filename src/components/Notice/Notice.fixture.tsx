@@ -10,8 +10,8 @@ const NoticesFixture: React.FC = () => {
         notify({
           title: 'Aw fuck',
           children: <p>Looks like you messed it up, egg.</p>,
-          button: 'Start over',
-        })
+          buttons: { again: 'Start over' },
+        }).then(console.log)
       }
     >
       Fuck it up

@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useContext, useMemo, useReducer } fr
 import uniqueId from 'lodash/fp/uniqueId';
 import Notice, { NoticeProps } from '.';
 
-type NoticePromise = Promise<any>;
+type NoticePromise = Promise<string | null>;
 
 type NoticeHandle = NoticeProps & {
   id: string;
@@ -14,15 +14,16 @@ type NoticesContextShape = {
   notify: (props: Omit<NoticeProps, 'state'>) => NoticePromise;
 };
 
-type NoticeAction =
-  | ({
-      type: 'open';
-    } & NoticeHandle)
-  | { type: 'close'; id: string }
-  | { type: 'closed'; id: string };
+type OpenAction = { type: 'open' } & NoticeHandle;
+
+type CloseAction = { type: 'close'; id: string; button: string | null };
+
+type ClosedAction = { type: 'closed'; id: string };
+
+type NoticeAction = OpenAction | CloseAction | ClosedAction;
 
 const NoticesContext = createContext<NoticesContextShape>({
-  notify: (props) => Promise.resolve(),
+  notify: (props) => Promise.resolve(null),
 });
 
 const Notices: React.FC = ({ children }) => {
@@ -33,7 +34,7 @@ const Notices: React.FC = ({ children }) => {
           return new Map(state).set(id, action as NoticeHandle);
         case 'close':
           const handle = state.get(id) as NoticeHandle;
-          if (handle.onClose) handle.onClose();
+          if (handle.onClose) handle.onClose((action as CloseAction).button);
           return new Map(state).set(id, { ...handle, state: 'closing' });
         case 'closed': {
           const map = new Map(state);
@@ -49,7 +50,7 @@ const Notices: React.FC = ({ children }) => {
   );
 
   const notify = useCallback((props: Omit<NoticeProps, 'state'>) => {
-    const promise = new Promise<void>((onClose) => {
+    const promise = new Promise<string | null>((onClose) => {
       dispatch({ type: 'open', ...props, id: uniqueId('notice'), state: 'open', onClose });
     });
     return promise;
@@ -70,7 +71,7 @@ const Notices: React.FC = ({ children }) => {
           <Notice
             key={id}
             {...notice}
-            onClose={() => dispatch({ type: 'close', id })}
+            onClose={(button) => dispatch({ type: 'close', id, button })}
             onClosed={() => dispatch({ type: 'closed', id })}
           />
         ))}
