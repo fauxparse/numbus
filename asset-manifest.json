@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/numbus/static/css/main.f2272be8.css",
+    "main.css": "/numbus/static/css/main.a846d604.css",
     "main.js": "/numbus/static/js/main.8edfd9a2.js",
     "static/js/787.e55c16d6.chunk.js": "/numbus/static/js/787.e55c16d6.chunk.js",
     "index.html": "/numbus/index.html",
-    "main.f2272be8.css.map": "/numbus/static/css/main.f2272be8.css.map",
+    "main.a846d604.css.map": "/numbus/static/css/main.a846d604.css.map",
     "main.8edfd9a2.js.map": "/numbus/static/js/main.8edfd9a2.js.map",
     "787.e55c16d6.chunk.js.map": "/numbus/static/js/787.e55c16d6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f2272be8.css",
+    "static/css/main.a846d604.css",
     "static/js/main.8edfd9a2.js"
   ]
 }
