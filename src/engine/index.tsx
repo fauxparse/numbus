@@ -21,11 +21,8 @@ export const EngineContext = createContext<EngineContextShape>({ state: null });
 
 const reducer = (state: Maybe<State>, action: Action): Maybe<State> => {
   if (!state) return null;
-  let newState = perform(action, state);
-  if (action.action === 'solve' && newState.step === state.step) {
-    newState = { ...newState, stuck: true };
-  }
-  return newState;
+  const newState = perform(action, state);
+  return { ...newState, stuck: action.action === 'solve' && newState.step === state.step };
 };
 
 export const EngineProvider: React.FC = ({ children }) => {
